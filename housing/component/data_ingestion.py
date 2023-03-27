@@ -16,6 +16,7 @@ from housing.entity.artifact_entity import DataIngestionArtifact
 
 
 class DataIngestion:
+
     def __init__(self, data_ingestion_config: DataIngestionConfig):
         try:
             logging.info(f"{'='*20} Data Ingestion log Started {'='*20}")
@@ -25,7 +26,7 @@ class DataIngestion:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
             raise HousingException(e, sys) from e
 
-    def download_housing_data(self,):
+    def download_housing_data(self,) -> str:
         try:
             # extraction remote url to download url
             download_url = self.data_ingestion_config.dataset_download_url
@@ -33,10 +34,8 @@ class DataIngestion:
             # folder loactoin to download file
             tgz_download_dir = self.data_ingestion_config.tgz_download_dir
 
-            if os.path.exists(tgz_download_dir):
-                os.remove(tgz_download_dir)
-
-            os.makedirs('tgz_download_dir', exist_ok=True)
+            
+            os.makedirs(tgz_download_dir, exist_ok=True)
 
             housing_file_name = os.path.basename(download_url)
 
@@ -47,7 +46,10 @@ class DataIngestion:
              --> From URL : [{download_url}]
              --> Into Folder : [{tgz_file_path}]
              """)
+            
             urllib.request.urlretrieve(download_url, tgz_file_path)
+
+            logging.info(f"File :[{tgz_file_path}] has been downloaded successfully.")
 
             return tgz_file_path
 
@@ -66,7 +68,8 @@ class DataIngestion:
             --> Extracting Data from tgz file :  [{tgz_file_path}]
             --> to raw data dir : [{raw_data_dir}]
             """)
-            os.makedirs('raw_data_dir', exist_ok=True)
+
+            os.makedirs(raw_data_dir, exist_ok=True)
 
             with tarfile.open(tgz_file_path) as housing_tgz_file_obj:
                 housing_tgz_file_obj.extractall(path=raw_data_dir)
@@ -100,9 +103,9 @@ class DataIngestion:
 
             split= StratifiedShuffleSplit(n_splits=1,test_size=0.2,random_state=0)
 
-            for train_index,test_index in split.split(housing_data_frame,groups=housing_data_frame['income_category']):
-                strat_train_set=(housing_data_frame.loc[train_index]).drop('income_category',axis=1)
-                strat_test_set=(housing_data_frame.loc[test_index]).drop('income_category',axis=1)
+            for train_index,test_index in split.split(housing_data_frame, housing_data_frame["income_category"]):
+                strat_train_set = housing_data_frame.loc[train_index].drop(["income_category"],axis=1)
+                strat_test_set = housing_data_frame.loc[test_index].drop(["income_category"],axis=1)
 
 
             train_file_path=os.path.join(self.data_ingestion_config.ingested_train_dir,file_name)
@@ -146,4 +149,5 @@ class DataIngestion:
 
 
     def __del__(self):
+        
         logging.info(f"{'='*20} Data Ingestion Log Completed {'='*20} \n\n")

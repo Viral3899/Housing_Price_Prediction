@@ -75,7 +75,7 @@ class Configuration:
 
             tgz_download_dir = os.path.join(
                 data_ingestion_artifact_dir,
-                data_ingestion_info[DATA_INGESTION_INGESTED_DIR_KEY]
+                data_ingestion_info[DATA_INGESTION_TGZ_DOWNLOAD_DIR_KEY]
                 )
 
             ingested_train_dir = os.path.join(
