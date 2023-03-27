@@ -51,7 +51,6 @@ class Configuration:
     def get_data_ingestion_config(self) -> DataIngestionConfig:
 
         try:
-
             data_ingestion_info = self.config_info[DATA_INGESTION_CONFIG_KEY]
 
             dataset_download_url = data_ingestion_info[DATA_INGESTION_DOWNLOAD_URL_KEY]
@@ -115,7 +114,7 @@ class Configuration:
             artifact_dir=self.training_pipeline_config.artifact_dir
 
             data_validation_artifact_dir=os.path.join(
-                artifact_dir,data_validation_info[DATA_VALIDATON_ARTIFACT_DIR_KEY]
+                artifact_dir,data_validation_info[DATA_VALIDATION_ARTIFACT_DIR_KEY]
             )
             
             schema_file_path=os.path.join(
