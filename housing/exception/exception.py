@@ -17,11 +17,11 @@ class HousingException(Exception):
         file_name=exc_tb.tb_frame.f_code.co_filename
         try_block_line_no=exc_tb.tb_lineno
         EXception_block_line_no=exc_tb.tb_frame.f_lineno
-        error_message=f"""
-        Error Occured in Python Script : [{file_name}] 
-        at try block line number : [{try_block_line_no}]
-        and exception block line no : [{EXception_block_line_no}]
-        error message : [{str(error)}]
+        error_message=f"""Python Script :
+        [{file_name}] 
+        at try block line number : [{try_block_line_no}] and exception block line no : [{EXception_block_line_no}] 
+        error message : 
+        [{str(error)}]
         """
 
         return error_message

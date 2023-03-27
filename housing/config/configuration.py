@@ -51,6 +51,7 @@ class Configuration:
     def get_data_ingestion_config(self) -> DataIngestionConfig:
 
         try:
+
             data_ingestion_info = self.config_info[DATA_INGESTION_CONFIG_KEY]
 
             dataset_download_url = data_ingestion_info[DATA_INGESTION_DOWNLOAD_URL_KEY]
