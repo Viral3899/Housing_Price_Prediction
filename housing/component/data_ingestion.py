@@ -34,7 +34,6 @@ class DataIngestion:
             # folder loactoin to download file
             tgz_download_dir = self.data_ingestion_config.tgz_download_dir
 
-            
             os.makedirs(tgz_download_dir, exist_ok=True)
 
             housing_file_name = os.path.basename(download_url)
@@ -46,10 +45,11 @@ class DataIngestion:
              --> From URL : [{download_url}]
              --> Into Folder : [{tgz_file_path}]
              """)
-            
+
             urllib.request.urlretrieve(download_url, tgz_file_path)
 
-            logging.info(f"File :[{tgz_file_path}] has been downloaded successfully.")
+            logging.info(
+                f"File :[{tgz_file_path}] has been downloaded successfully.")
 
             return tgz_file_path
 
@@ -80,56 +80,62 @@ class DataIngestion:
 
     def split_data_as_train_test(self,) -> DataIngestionArtifact:
         try:
-            
-            raw_data_dir=self.data_ingestion_config.raw_data_dir
 
-            file_name=os.listdir(raw_data_dir)[0]
+            raw_data_dir = self.data_ingestion_config.raw_data_dir
 
-            housing_file_path=os.path.join(raw_data_dir,file_name)
+            file_name = os.listdir(raw_data_dir)[0]
 
-            housing_data_frame= pd.read_csv(housing_file_path)
+            housing_file_path = os.path.join(raw_data_dir, file_name)
+
+            housing_data_frame = pd.read_csv(housing_file_path)
 
             logging.info(f'Reading file data from [{housing_file_path}]')
             housing_data_frame['income_category'] = pd.cut(
                 housing_data_frame['median_income'],
-                bins= [0.0, 1.5, 3.0, 4.5, 6.0, np.inf],
+                bins=[0.0, 1.5, 3.0, 4.5, 6.0, np.inf],
                 labels=[1, 2, 3, 4, 5]
             )
 
-
             logging.info(f'Splitting Data into Train Test')
-            strat_train_set=None
-            strat_test_set=None
+            strat_train_set = None
+            strat_test_set = None
 
-            split= StratifiedShuffleSplit(n_splits=1,test_size=0.2,random_state=0)
+            split = StratifiedShuffleSplit(
+                n_splits=1, test_size=0.2, random_state=0)
 
-            for train_index,test_index in split.split(housing_data_frame, housing_data_frame["income_category"]):
-                strat_train_set = housing_data_frame.loc[train_index].drop(["income_category"],axis=1)
-                strat_test_set = housing_data_frame.loc[test_index].drop(["income_category"],axis=1)
+            for train_index, test_index in split.split(housing_data_frame, housing_data_frame["income_category"]):
+                strat_train_set = housing_data_frame.loc[train_index].drop(
+                    ["income_category"], axis=1)
+                strat_test_set = housing_data_frame.loc[test_index].drop(
+                    ["income_category"], axis=1)
 
-
-            train_file_path=os.path.join(self.data_ingestion_config.ingested_train_dir,file_name)
-            test_file_path=os.path.join(self.data_ingestion_config.ingested_test_dir,file_name)
+            train_file_path = os.path.join(
+                self.data_ingestion_config.ingested_train_dir, file_name)
+            test_file_path = os.path.join(
+                self.data_ingestion_config.ingested_test_dir, file_name)
 
             if strat_train_set is not None:
-                os.makedirs(self.data_ingestion_config.ingested_train_dir,exist_ok=True)
-                logging.info(f'Exporting training Dataset into [{train_file_path}]')
-                strat_train_set.to_csv(train_file_path,index=False)
-
+                os.makedirs(
+                    self.data_ingestion_config.ingested_train_dir, exist_ok=True)
+                logging.info(
+                    f'Exporting training Dataset into [{train_file_path}]')
+                strat_train_set.to_csv(train_file_path, index=False)
 
             if strat_test_set is not None:
-                os.makedirs(self.data_ingestion_config.ingested_test_dir,exist_ok=True)
-                logging.info(f'Exporting testing Dataset into [{test_file_path}]')
-                strat_test_set.to_csv(test_file_path,index=False)
+                os.makedirs(
+                    self.data_ingestion_config.ingested_test_dir, exist_ok=True)
+                logging.info(
+                    f'Exporting testing Dataset into [{test_file_path}]')
+                strat_test_set.to_csv(test_file_path, index=False)
 
+            data_ingestion_artifact = DataIngestionArtifact(train_file_path=train_file_path,
+                                                            test_file_path=test_file_path,
+                                                            is_ingested=True,
+                                                            message=f"Data Ingestion Completed Successefully")
 
-            data_ingestion_artifact=DataIngestionArtifact(train_file_path=train_file_path,
-                                  test_file_path=test_file_path,
-                                  is_ingested=True,
-                                  message=f"Data Ingestion Completed Successefully")
-            
-            logging.info(f'Data Ingestion Artifact : [{data_ingestion_artifact}]')
-            
+            logging.info(
+                f'Data Ingestion Artifact : [{data_ingestion_artifact}]')
+
             return data_ingestion_artifact
 
         except Exception as e:
@@ -147,7 +153,6 @@ class DataIngestion:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
             raise HousingException(e, sys) from e
 
-
     def __del__(self):
-        
+
         logging.info(f"{'='*20} Data Ingestion Log Completed {'='*20} \n\n")
