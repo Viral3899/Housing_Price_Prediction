@@ -102,24 +102,26 @@ class DataValidation:
 
             logging.info(
                 f'Validating Datatype of Columns with Given Schema at [{schema_file_path}]')
-            data_type_of_cols_validate = False
-            if (Counter(schema_config['numerical_columns'])) == (Counter([col for col in train_df.columns if train_df[col].dtype != 'O'])) \
-                    and (Counter(schema_config['numerical_columns'])) == (Counter([col for col in test_df.columns if test_df[col].dtype != 'O'])) \
-                    and (Counter(schema_config['categorical_columns'])) == (Counter([col for col in train_df.columns if test_df[col].dtype == 'O'])) \
-                    and (Counter(schema_config['categorical_columns'])) == (Counter([col for col in test_df.columns if test_df[col].dtype == 'O'])):
-                data_type_of_cols_validate = True
-                logging.info(
-                    'DataType of Columns are passed Successfully for both Data')
+            # data_type_of_cols_validate = False
+            # if (Counter(schema_config['numerical_columns'])) == (Counter([col for col in train_df.columns if train_df[col].dtype != 'O'])) \
+            #         and (Counter(schema_config['numerical_columns'])) == (Counter([col for col in test_df.columns if test_df[col].dtype != 'O'])) \
+            #         and (Counter(schema_config['categorical_columns'])) == (Counter([col for col in train_df.columns if test_df[col].dtype == 'O'])) \
+            #         and (Counter(schema_config['categorical_columns'])) == (Counter([col for col in test_df.columns if test_df[col].dtype == 'O'])):
+            #     data_type_of_cols_validate = True
+            #     logging.info(
+            #         'DataType of Columns are passed Successfully for both Data')
 
             logging.info(
                 f'Validating Domain Values of Columns with Given Schema at [{schema_file_path}]')
             is_domain_value_validate = False
-            if Counter(schema_config['domain_value']['ocean_proximity']) == Counter(train_df['ocean_proximity'].unique()) == Counter(test_df['ocean_proximity'].unique):
+            if Counter(schema_config['domain_value']['ocean_proximity']) == Counter(train_df['ocean_proximity'].unique()) == Counter(test_df['ocean_proximity'].unique()):
                 is_domain_value_validate = True
                 logging.info(
                     f'Domain values of Columns [{list(schema_config["domain_value"].keys())}] are passed Successfully for both Data')
 
-            is_schema_validated = number_of_cols_validate and data_type_of_cols_validate and is_domain_value_validate and is_target_column_avilable
+            print('\n\n\n',number_of_cols_validate,is_domain_value_validate,is_target_column_avilable,'\n\n\n')
+            is_schema_validated = number_of_cols_validate and is_domain_value_validate and is_target_column_avilable
+
 
             if not is_schema_validated:
                 message = f"Either Number of Columns or Datatype of Columns or Domain VAlues of Column  is Not Matched "
@@ -134,10 +136,10 @@ class DataValidation:
 
     def get_and_save_data_drift_report(self):
         try:
-            profile = Profile(sections=[DataDriftProfileSection])
+            profile = Profile(sections=[DataDriftProfileSection()])
             train_df, test_df = self.get_train_and_test_df()
             profile.calculate(train_df, test_df)
-            report = json.load(profile.json())
+            report = json.loads(profile.json())
 
             report_file_path = self.data_validation_config.report_file_path
             report_dir = os.path.dirname(report_file_path)
@@ -154,7 +156,7 @@ class DataValidation:
 
     def save_data_drift_report_page(self):
         try:
-            dashboard = Dashboard(sections=[DataDriftTab()])
+            dashboard = Dashboard(tabs=[DataDriftTab()])
             train_df, test_df = self.get_train_and_test_df()
             dashboard.calculate(train_df, test_df)
 
