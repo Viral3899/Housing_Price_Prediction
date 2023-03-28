@@ -12,7 +12,7 @@ from housing.entity.config_entity import DataIngestionConfig, DataTransforamtion
 
 
 class Configuration:
-    def __init__(self, config_file_path=CONFIG_FILE_PATH,
+    def __init__(self, config_file_path : str =CONFIG_FILE_PATH,
                  current_time_stamp=get_current_time_stamp()) -> None:
 
         try:

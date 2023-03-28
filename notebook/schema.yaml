@@ -27,5 +27,4 @@ numerical_columns:
 - households
 - median_income
 - median_house_value
-- income_category
 target_column: median_house_value

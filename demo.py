@@ -4,8 +4,8 @@ from housing.exception.exception import HousingException
 from housing.config.configuration import Configuration
 import sys
 
-# import ssl
-# ssl._create_default_https_context = ssl._create_unverified_context
+import ssl
+ssl._create_default_https_context = ssl._create_unverified_context
 
 
 def main():

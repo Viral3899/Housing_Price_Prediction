@@ -1,7 +1,7 @@
 import os
 import sys
-from six.moves import urllib
 import requests
+from six.moves import urllib
 import tarfile
 import pandas as pd
 import numpy as np
@@ -48,11 +48,11 @@ class DataIngestion:
              --> Into Folder : [{tgz_file_path}]
              """)
 
-            # urllib.request.urlretrieve(download_url, tgz_file_path)
+            urllib.request.urlretrieve(download_url, tgz_file_path)
 
-            response = requests.get(download_url)
-            with open(tgz_file_path, 'wb') as f:
-                f.write(response.content)
+            # response = requests.get(download_url)
+            # with open(tgz_file_path, 'wb') as f:
+            #     f.write(response.content)
 
             logging.info(
                 f"File :[{tgz_file_path}] has been downloaded successfully.")
@@ -153,7 +153,8 @@ class DataIngestion:
             tgz_file_path = self.download_housing_data()
 
             self.extract_tgz_file(tgz_file_path=tgz_file_path)
-            self.split_data_as_train_test()
+            
+            return self.split_data_as_train_test()
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")

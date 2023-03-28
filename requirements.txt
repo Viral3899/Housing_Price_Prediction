@@ -4,4 +4,6 @@ numpy
 pandas
 scikit-learn
 PyYAML
+requests
+evidently
 -e .
