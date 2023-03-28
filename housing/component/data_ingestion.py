@@ -1,6 +1,7 @@
 import os
 import sys
 from six.moves import urllib
+import requests
 import tarfile
 import pandas as pd
 import numpy as np
@@ -19,7 +20,8 @@ class DataIngestion:
 
     def __init__(self, data_ingestion_config: DataIngestionConfig):
         try:
-            logging.info(f"{'='*20} Data Ingestion log Started {'='*20}")
+            logging.info(
+                f"\n\n{'='*20} Data Ingestion log Started {'='*20}\n\n")
             self.data_ingestion_config = data_ingestion_config
 
         except Exception as e:
@@ -46,7 +48,11 @@ class DataIngestion:
              --> Into Folder : [{tgz_file_path}]
              """)
 
-            urllib.request.urlretrieve(download_url, tgz_file_path)
+            # urllib.request.urlretrieve(download_url, tgz_file_path)
+
+            response = requests.get(download_url)
+            with open(tgz_file_path, 'wb') as f:
+                f.write(response.content)
 
             logging.info(
                 f"File :[{tgz_file_path}] has been downloaded successfully.")
@@ -155,4 +161,5 @@ class DataIngestion:
 
     def __del__(self):
 
-        logging.info(f"{'='*20} Data Ingestion Log Completed {'='*20} \n\n")
+        logging.info(
+            f"\n\n{'='*20} Data Ingestion Log Completed {'='*20} \n\n")
