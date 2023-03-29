@@ -6,4 +6,6 @@ scikit-learn
 PyYAML
 requests
 evidently
+matplotlib
+seaborn
 -e .

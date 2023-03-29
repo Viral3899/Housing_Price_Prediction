@@ -102,14 +102,14 @@ class DataValidation:
 
             logging.info(
                 f'Validating Datatype of Columns with Given Schema at [{schema_file_path}]')
-            # data_type_of_cols_validate = False
-            # if (Counter(schema_config['numerical_columns'])) == (Counter([col for col in train_df.columns if train_df[col].dtype != 'O'])) \
-            #         and (Counter(schema_config['numerical_columns'])) == (Counter([col for col in test_df.columns if test_df[col].dtype != 'O'])) \
-            #         and (Counter(schema_config['categorical_columns'])) == (Counter([col for col in train_df.columns if test_df[col].dtype == 'O'])) \
-            #         and (Counter(schema_config['categorical_columns'])) == (Counter([col for col in test_df.columns if test_df[col].dtype == 'O'])):
-            #     data_type_of_cols_validate = True
-            #     logging.info(
-            #         'DataType of Columns are passed Successfully for both Data')
+            data_type_of_cols_validate = False
+            if (Counter(schema_config['numerical_columns'])) == (Counter([col for col in train_df.columns if train_df[col].dtype != 'O'])) \
+                    and (Counter(schema_config['numerical_columns'])) == (Counter([col for col in test_df.columns if test_df[col].dtype != 'O'])) \
+                    and (Counter(schema_config['categorical_columns'])) == (Counter([col for col in train_df.columns if test_df[col].dtype == 'O'])) \
+                    and (Counter(schema_config['categorical_columns'])) == (Counter([col for col in test_df.columns if test_df[col].dtype == 'O'])):
+                data_type_of_cols_validate = True
+                logging.info(
+                    'DataType of Columns are passed Successfully for both Data')
 
             logging.info(
                 f'Validating Domain Values of Columns with Given Schema at [{schema_file_path}]')
@@ -118,10 +118,7 @@ class DataValidation:
                 is_domain_value_validate = True
                 logging.info(
                     f'Domain values of Columns [{list(schema_config["domain_value"].keys())}] are passed Successfully for both Data')
-
-            print('\n\n\n',number_of_cols_validate,is_domain_value_validate,is_target_column_avilable,'\n\n\n')
-            is_schema_validated = number_of_cols_validate and is_domain_value_validate and is_target_column_avilable
-
+            is_schema_validated = number_of_cols_validate and is_domain_value_validate and is_target_column_avilable and data_type_of_cols_validate
 
             if not is_schema_validated:
                 message = f"Either Number of Columns or Datatype of Columns or Domain VAlues of Column  is Not Matched "
