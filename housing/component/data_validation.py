@@ -89,9 +89,11 @@ class DataValidation:
 
             logging.info('Validating Number of Colums')
             number_of_cols_validate = False
-            if (len((schema_config['columns'].keys())) == (len(train_df_columns)-1)) & (len((schema_config['columns'].keys())) == (len(test_df_columns)-1)):
+            if (len((schema_config['columns'].keys())) == (len(train_df_columns))) & (len((schema_config['columns'].keys())) == (len(test_df_columns))):
                 number_of_cols_validate = True
                 logging.info('Number of cols are Validated')
+            else:
+                raise Exception('Number of cols are not matching')
 
             logging.info(f'Checking weather target Columns is Avlilable]')
             is_target_column_avilable = False
@@ -99,17 +101,21 @@ class DataValidation:
                 is_target_column_avilable = True
                 logging.info(
                     f'Target Column is Available [{schema_config["target_column"]}]')
+            else:
+                raise Exception('target col is not availebal')
 
             logging.info(
                 f'Validating Datatype of Columns with Given Schema at [{schema_file_path}]')
             data_type_of_cols_validate = False
-            if (Counter(schema_config['numerical_columns'])) == (Counter([col for col in train_df.columns if train_df[col].dtype != 'O'])) \
-                    and (Counter(schema_config['numerical_columns'])) == (Counter([col for col in test_df.columns if test_df[col].dtype != 'O'])) \
+            if (Counter(schema_config['numerical_columns'])) == (Counter([col for col in train_df.columns if train_df[col].dtype != 'O' and col != schema_config['target_column']])) \
+                    and (Counter(schema_config['numerical_columns'])) == (Counter([col for col in test_df.columns if test_df[col].dtype != 'O' and col != schema_config['target_column']])) \
                     and (Counter(schema_config['categorical_columns'])) == (Counter([col for col in train_df.columns if test_df[col].dtype == 'O'])) \
                     and (Counter(schema_config['categorical_columns'])) == (Counter([col for col in test_df.columns if test_df[col].dtype == 'O'])):
                 data_type_of_cols_validate = True
                 logging.info(
                     'DataType of Columns are passed Successfully for both Data')
+            else:
+                raise Exception('DataType of Columns is not matching')
 
             logging.info(
                 f'Validating Domain Values of Columns with Given Schema at [{schema_file_path}]')
@@ -118,6 +124,9 @@ class DataValidation:
                 is_domain_value_validate = True
                 logging.info(
                     f'Domain values of Columns [{list(schema_config["domain_value"].keys())}] are passed Successfully for both Data')
+            else:
+                raise Exception('domain value prob')
+
             is_schema_validated = number_of_cols_validate and is_domain_value_validate and is_target_column_avilable and data_type_of_cols_validate
 
             if not is_schema_validated:
@@ -190,7 +199,7 @@ class DataValidation:
                                                               message='Data validation performed successfully')
             logging.info(
                 f"Data VAlidation Artifact: [{data_validation_artifact}]")
-
+            return data_validation_artifact
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
             raise HousingException(e, sys) from e
