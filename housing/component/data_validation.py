@@ -195,7 +195,6 @@ class DataValidation:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
             raise HousingException(e, sys) from e
 
-
     def __del__(self):
 
         logging.info(

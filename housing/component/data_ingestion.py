@@ -153,7 +153,7 @@ class DataIngestion:
             tgz_file_path = self.download_housing_data()
 
             self.extract_tgz_file(tgz_file_path=tgz_file_path)
-            
+
             return self.split_data_as_train_test()
 
         except Exception as e:
