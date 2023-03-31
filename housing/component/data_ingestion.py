@@ -26,7 +26,7 @@ class DataIngestion:
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def download_housing_data(self,) -> str:
         try:
@@ -61,7 +61,7 @@ class DataIngestion:
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def extract_tgz_file(self, tgz_file_path: str):
         try:
@@ -82,7 +82,7 @@ class DataIngestion:
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def split_data_as_train_test(self,) -> DataIngestionArtifact:
         try:
@@ -146,7 +146,7 @@ class DataIngestion:
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def initiate_data_ingestion(self,) -> DataIngestionArtifact:
         try:
@@ -158,7 +158,7 @@ class DataIngestion:
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def __del__(self):
 

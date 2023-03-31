@@ -51,7 +51,7 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def fit(self, X, y=None):
         return self
@@ -79,7 +79,7 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
 
 class DataTransformation:
@@ -99,7 +99,7 @@ class DataTransformation:
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def get_data_transformer_object(self) -> ColumnTransformer:
         try:
@@ -138,7 +138,7 @@ class DataTransformation:
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def initiate_data_transformation(self) -> DataTransformationArtifact:
         try:
@@ -249,7 +249,7 @@ class DataTransformation:
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def __del__(self):
 

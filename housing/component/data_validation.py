@@ -31,7 +31,7 @@ class DataValidation:
             self.data_ingestion_artifact = data_ingestion_artifact
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def get_train_and_test_df(self):
         try:
@@ -40,7 +40,7 @@ class DataValidation:
             test_df = pd.read_csv(self.data_ingestion_artifact.test_file_path)
             return train_df, test_df
         except Exception as e:
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def is_train_test_file_exists(self) -> bool:
         try:
@@ -74,7 +74,7 @@ class DataValidation:
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def validate_dataset_schema(self) -> bool:
         try:
@@ -138,7 +138,7 @@ class DataValidation:
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def get_and_save_data_drift_report(self):
         try:
@@ -158,7 +158,7 @@ class DataValidation:
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def save_data_drift_report_page(self):
         try:
@@ -174,7 +174,7 @@ class DataValidation:
 
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def is_data_drift_found(self) -> bool:
         try:
@@ -184,7 +184,7 @@ class DataValidation:
             return True
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def initiate_data_validation(self) -> DataValidationArtifact:
         try:
@@ -202,7 +202,7 @@ class DataValidation:
             return data_validation_artifact
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
-            raise HousingException(e, sys) from e
+            raise HousingException(e, sys)
 
     def __del__(self):
 

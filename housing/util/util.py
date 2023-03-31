@@ -47,7 +47,7 @@ def load_data(file_path: str, schema_file_path: str) -> pd.DataFrame:
 
     except Exception as e:
         logging.info(f"Error Occured at {HousingException(e,sys)}")
-        raise HousingException(e, sys) from e
+        raise HousingException(e, sys)
     
 
 
@@ -69,11 +69,12 @@ def save_numpy_array_data(file_path : str,  array : np.array):
 
     except Exception as e:
         logging.info(f"Error Occured at {HousingException(e,sys)}")
-        raise HousingException(e, sys) from e
+        raise HousingException(e, sys)
+    
+
 
 
 def save_object(file_path:str,obj):
-
 
     try:
         dir_path = os.path.dirname(file_path)
@@ -84,7 +85,16 @@ def save_object(file_path:str,obj):
 
     except Exception as e:  
         logging.info(f"Error Occured at {HousingException(e,sys)}")
-        raise HousingException(e, sys) from e
+        raise HousingException(e, sys)
+    
+
+
+def load_numpy_array_data(file_path:str) -> np.array:
+    try:
+        pass
+    except Exception as e:
+        logging.info(f"Error Occured at {HousingException(e,sys)}")
+        raise HousingException(e,sys)
     
 
     

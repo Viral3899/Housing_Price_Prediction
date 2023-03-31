@@ -3,6 +3,8 @@ gunicorn
 numpy
 pandas
 scikit-learn
+xgboost
+catboost
 PyYAML
 requests
 evidently
