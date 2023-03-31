@@ -54,9 +54,24 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
             raise HousingException(e, sys)
 
     def fit(self, X, y=None):
+        """
+        The fit function is used to fit the data into the model
+        
+        :param X: A numpy array or sparse matrix of shape [n_samples, n_features]
+        :param y: the target variable
+        :return: The fit method returns the instance of the class.
+        """
         return self
 
     def transform(self, X, y=None):
+        """
+        It takes the total number of rooms in a district, divides it by the number of households, and
+        adds this value to the data as a new attribute
+        
+        :param X: The input data
+        :param y: The target variable
+        :return: The generated feature is being returned.
+        """
         try:
             room_per_household = X[:, self.total_rooms_ix] / \
                 X[:, self.households_ix]
@@ -85,9 +100,22 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
 class DataTransformation:
 
     def __init__(self, data_transformation_config: DataTransformationConfig,
-                 data_ingestion_artifact: DataIngestionArtifact,
-                 data_validation_artifact: DataValidationArtifact
+                 data_ingestion_artifact: DataIngestionArtifact
+                 ,data_validation_artifact: DataValidationArtifact
                  ):
+        """
+        The function takes in three arguments: data_transformation_config, data_ingestion_artifact,
+        data_validation_artifact
+        
+        :param data_transformation_config: This is a class that contains the configuration for the data
+        transformation
+        :type data_transformation_config: DataTransformationConfig
+        :param data_ingestion_artifact: This is the output of the data ingestion step. It contains the
+        dataframe that was created in the data ingestion step
+        :type data_ingestion_artifact: DataIngestionArtifact
+        :param data_validation_artifact: This is the output of the data validation step
+        :type data_validation_artifact: DataValidationArtifact
+        """
 
         try:
             logging.info(
@@ -102,6 +130,11 @@ class DataTransformation:
             raise HousingException(e, sys)
 
     def get_data_transformer_object(self) -> ColumnTransformer:
+        """
+        It takes the schema file path as input and returns a ColumnTransformer object which is used to
+        transform the data
+        :return: A ColumnTransformer object
+        """
         try:
             schema_file_path = self.data_validation_artifact.schema_file_path
 
@@ -141,6 +174,12 @@ class DataTransformation:
             raise HousingException(e, sys)
 
     def initiate_data_transformation(self) -> DataTransformationArtifact:
+        """
+        It takes the training and testing dataframe, splits the input and target feature, applies the
+        preprocessing object on the input feature, and saves the transformed training and testing array
+        and preprocessing object.
+        :return: DataTransformationArtifact
+        """
         try:
             logging.info('Obtaining preprocessing Object')
 
@@ -162,37 +201,6 @@ class DataTransformation:
 
             dataset_schema = read_yaml_file(schema_file_path)
             target_column_name = dataset_schema[TARGET_COLUMN_KEY]
-
-            # logging.info(
-            #     'Splitting Input Columns And Target Column in Training And Testing Set')
-
-            # input_features_train_df = train_df.drop(
-            #     columns=target_column_name, axis=1)
-            # target_feature_train_df = train_df[target_column_name]
-            # input_features_test_df = test_df.drop(
-            #     columns=target_column_name, axis=1)
-            # target_feature_test_df = test_df[target_column_name]
-
-            # logging.info(
-            #     'Applying preprocessing to traing input Features and Testing input Features')
-
-            # input_features_train_arr = preprocessing_obj.fit_transform(
-            #     input_features_train_df)
-            # input_features_test_arr = preprocessing_obj.transform(
-            #     input_features_test_df)
-
-            # train_arr = np.c_[input_features_train_arr,
-            #                   np.array(target_feature_train_df)]
-            # test_arr = np.c_[input_features_test_arr,
-            #                  np.array(target_feature_test_df)]
-
-            # transformed_train_dir = self.data_transformation_config.transformed_train_dir
-            # transformed_test_dir = self.data_transformation_config.transformed_test_dir
-
-            # train_file_name = os.path.basename(
-            #     train_file_path).replace(".csv", ".npz")
-            # test_file_name = os.path.basename(
-            #     test_file_path).replace(".csv", ".npz")
 
             logging.info(f"Splitting input and target feature from training and testing dataframe.")
             input_feature_train_df = train_df.drop(columns=[target_column_name],axis=1)

@@ -58,6 +58,13 @@ class ModelFactory:
 
     @staticmethod
     def read_params(config_path: str) -> dict:
+        """
+        It reads a yaml file and returns a dictionary
+        
+        :param config_path: str = "config.yaml"
+        :type config_path: str
+        :return: a dictionary.
+        """
         try:
             with open(config_path) as yaml_file:
                 config: dict = yaml.safe_load(yaml_file)

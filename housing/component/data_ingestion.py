@@ -29,6 +29,10 @@ class DataIngestion:
             raise HousingException(e, sys)
 
     def download_housing_data(self,) -> str:
+        """
+        It downloads the housing data from the remote url and stores it in the local file system
+        :return: The file path of the downloaded file.
+        """
         try:
             # extraction remote url to download url
             download_url = self.data_ingestion_config.dataset_download_url
@@ -64,6 +68,12 @@ class DataIngestion:
             raise HousingException(e, sys)
 
     def extract_tgz_file(self, tgz_file_path: str):
+        """
+        It extracts the contents of a tgz file to a directory
+        
+        :param tgz_file_path: The path to the tgz file that you want to extract
+        :type tgz_file_path: str
+        """
         try:
             raw_data_dir = self.data_ingestion_config.raw_data_dir
 
@@ -85,6 +95,11 @@ class DataIngestion:
             raise HousingException(e, sys)
 
     def split_data_as_train_test(self,) -> DataIngestionArtifact:
+        """
+        It reads the data from the raw data directory, splits the data into train and test, and writes
+        the train and test data into the ingested train and test directories
+        :return: DataIngestionArtifact
+        """
         try:
 
             raw_data_dir = self.data_ingestion_config.raw_data_dir
@@ -149,6 +164,11 @@ class DataIngestion:
             raise HousingException(e, sys)
 
     def initiate_data_ingestion(self,) -> DataIngestionArtifact:
+        """
+        It downloads the housing data, extracts the tgz file, and splits the data into train and test
+        sets
+        :return: DataIngestionArtifact
+        """
         try:
             tgz_file_path = self.download_housing_data()
 

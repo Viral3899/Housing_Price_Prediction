@@ -34,6 +34,10 @@ class DataValidation:
             raise HousingException(e, sys)
 
     def get_train_and_test_df(self):
+        """
+        It reads the train and test data from the data ingestion artifact and returns the dataframes.
+        :return: The train_df and test_df are being returned.
+        """
         try:
             train_df = pd.read_csv(
                 self.data_ingestion_artifact.train_file_path)
@@ -43,6 +47,10 @@ class DataValidation:
             raise HousingException(e, sys)
 
     def is_train_test_file_exists(self) -> bool:
+        """
+        It checks if the training and testing files are present in the specified path
+        :return: The return value is a boolean value.
+        """
         try:
             logging.info(
                 'Checking if Training And Testing File is Available!!!!?')
@@ -75,8 +83,16 @@ class DataValidation:
         except Exception as e:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
             raise HousingException(e, sys)
-
+        
     def validate_dataset_schema(self) -> bool:
+        """
+        It checks if the number of columns in the schema file matches the number of columns in the train
+        and test dataframes, if the target column is present in both the dataframes, if the datatypes of
+        the columns in the schema file match the datatypes of the columns in the train and test
+        dataframes, and if the domain values of the categorical columns in the schema file match the
+        domain values of the categorical columns in the train and test dataframes
+        :return: A boolean value
+        """
         try:
             is_schema_validated = False
 
@@ -141,6 +157,10 @@ class DataValidation:
             raise HousingException(e, sys)
 
     def get_and_save_data_drift_report(self):
+        """
+        It takes the train and test dataframes, calculates the data drift report and saves it to a file
+        :return: The report is being returned.
+        """
         try:
             profile = Profile(sections=[DataDriftProfileSection()])
             train_df, test_df = self.get_train_and_test_df()
@@ -161,6 +181,9 @@ class DataValidation:
             raise HousingException(e, sys)
 
     def save_data_drift_report_page(self):
+        """
+        It takes a dataframe, splits it into train and test, and then saves the report page to a file
+        """
         try:
             dashboard = Dashboard(tabs=[DataDriftTab()])
             train_df, test_df = self.get_train_and_test_df()
@@ -177,6 +200,10 @@ class DataValidation:
             raise HousingException(e, sys)
 
     def is_data_drift_found(self) -> bool:
+        """
+        It checks if there is a data drift in the model and if there is, it saves the data drift report
+        page
+        """
         try:
             report = self.get_and_save_data_drift_report()
             self.save_data_drift_report_page()
@@ -187,6 +214,11 @@ class DataValidation:
             raise HousingException(e, sys)
 
     def initiate_data_validation(self) -> DataValidationArtifact:
+        """
+        It checks if the train and test files exist, validates the schema of the dataset, and checks if
+        there is any data drift
+        :return: DataValidationArtifact
+        """
         try:
             self.is_train_test_file_exists()
             self.validate_dataset_schema()

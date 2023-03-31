@@ -15,6 +15,12 @@ from housing.component.data_transformation import DataTransformation
 
 class Pipeline:
     def __init__(self, config: Configuration = Configuration()) -> None:
+        """
+        The function takes in a configuration object and sets it to the class variable config
+        
+        :param config: Configuration = Configuration()
+        :type config: Configuration
+        """ 
         try:
             self.config = config
         except Exception as e:
@@ -22,6 +28,11 @@ class Pipeline:
             raise HousingException(e, sys)
 
     def start_data_ingestion(self) -> DataIngestionArtifact:
+        """
+        It takes in a config object, creates a data ingestion object, and then initiates the data
+        ingestion process
+        :return: DataIngestionArtifact
+        """
         try:
             data_ingestion = DataIngestion(
                 data_ingestion_config=self.config.get_data_ingestion_config())
@@ -32,6 +43,13 @@ class Pipeline:
             raise HousingException(e, sys)
 
     def start_data_validation(self, data_ingestion_artifact: DataIngestionArtifact):
+        """
+        It takes in a data ingestion artifact and returns a data validation artifact
+        
+        :param data_ingestion_artifact: This is the object that contains the data that needs to be
+        validated
+        :type data_ingestion_artifact: DataIngestionArtifact
+        """
         try:
             data_validation = DataValidation(data_validation_config=self.config.get_data_validation_config(
             ), data_ingestion_artifact=data_ingestion_artifact)
@@ -41,9 +59,17 @@ class Pipeline:
             logging.info(f"Error Occured at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
-    def start_data_transformation(self,
-                                  data_ingetion_artifact: DataIngestionArtifact,
-                                  data_validation_artifact: DataValidationArtifact) -> DataValidationArtifact:
+    def start_data_transformation(self,data_ingetion_artifact: DataIngestionArtifact,data_validation_artifact: DataValidationArtifact) -> DataValidationArtifact:
+        """
+        The function takes in two arguments, data_ingetion_artifact and data_validation_artifact, and
+        returns a data_validation_artifact
+        
+        :param data_ingetion_artifact: DataIngestionArtifact
+        :type data_ingetion_artifact: DataIngestionArtifact
+        :param data_validation_artifact: DataValidationArtifact
+        :type data_validation_artifact: DataValidationArtifact
+        :return: DataValidationArtifact
+        """
         try:
             data_transformatin =DataTransformation(data_transformation_config=self.config.get_data_transforamtion_config(),
                                                    data_ingestion_artifact=data_ingetion_artifact,
@@ -64,6 +90,10 @@ class Pipeline:
         pass
 
     def run_pipeline(self):
+        """
+        The function runs a pipeline that starts with data ingestion, then data validation, and finally
+        data transformation
+        """
         try:
 
             data_ingestion_artifact = self.start_data_ingestion()

@@ -27,6 +27,10 @@ class Configuration:
             raise HousingException(e, sys)
 
     def get_training_pipeline_config(self) -> TrainingPipelineConfig:
+        """
+        It takes a config file, and returns a TrainingPipelineConfig object
+        :return: The training pipeline config is being returned.
+        """
 
         try:
 
@@ -50,6 +54,10 @@ class Configuration:
             raise HousingException(e, sys)
 
     def get_data_ingestion_config(self) -> DataIngestionConfig:
+        """
+        It takes the config_info dictionary and returns a DataIngestionConfig object
+        :return: DataIngestionConfig object
+        """
 
         try:
             data_ingestion_config_info = self.config_info[DATA_INGESTION_CONFIG_KEY]
@@ -106,6 +114,11 @@ class Configuration:
             raise HousingException(e, sys)
 
     def get_data_validation_config(self) -> DataValidationConfig:
+        """
+        It takes the config_info dictionary from the config file and returns a DataValidationConfig
+        object
+        :return: DataValidationConfig
+        """
         try:
             data_validation_config_info = self.config_info[DATA_VALIDATION_CONFIG_KEY]
 
@@ -145,6 +158,10 @@ class Configuration:
             raise HousingException(e, sys)
 
     def get_data_transforamtion_config(self) -> DataTransformationConfig:
+        """
+        It takes the config file and returns a DataTransformationConfig object
+        :return: DataTransformationConfig
+        """
         try:
             artifact_dir = self.training_pipeline_config.artifact_dir
 
@@ -194,6 +211,10 @@ class Configuration:
             raise HousingException(e, sys)
 
     def get_model_trainer_config(self) -> ModelTrainerConfig:
+        """
+        It takes the config file and returns the model trainer config object
+        :return: The model trainer config is being returned.
+        """
         try:
             artifact_dir = self.training_pipeline_config.artifact_dir
 
