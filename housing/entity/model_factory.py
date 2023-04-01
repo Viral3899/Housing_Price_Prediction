@@ -53,7 +53,7 @@ class ModelFactory:
         try:
             self.config: dict = ModelFactory.read_params(model_config_path)
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     @staticmethod
@@ -70,15 +70,15 @@ class ModelFactory:
                 config: dict = yaml.safe_load(yaml_file)
             return config
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
-    def excecute_grid_search_operaion(self, initialized_model: InitializedModelDetail,
+    def excecute_grid_search_operation(self, initialized_model: InitializedModelDetail,
                                         input_feature,output_feature) -> GridSearchedBestModel:
         try:
-            logging.info(f"Intiating GridSearchCV class")
+            logging.info(f"Initiating GridSearchCV class")
             grid_
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)

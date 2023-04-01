@@ -30,7 +30,7 @@ class DataValidation:
             self.data_validation_config = data_validation_config
             self.data_ingestion_artifact = data_ingestion_artifact
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def get_train_and_test_df(self):
@@ -68,22 +68,22 @@ class DataValidation:
             logging.info(
                 f'Testing File Available Status [is_test_file_exists = {is_test_file_exists}]')
 
-            is_availabel = is_train_file_exists and is_test_file_exists
+            is_available = is_train_file_exists and is_test_file_exists
 
             logging.info(
-                f'Training and Testing both File Available Status [is_Avilable = {is_availabel}]')
+                f'Training and Testing both File Available Status [is_Available = {is_available}]')
 
-            if not is_availabel:
+            if not is_available:
                 message = f'Training File : [{train_file_path}] or\n Testing File : [{test_file_path}] is not present.'
                 logging.info(message)
                 raise Exception(message)
 
-            return is_availabel
+            return is_available
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
-        
+
     def validate_dataset_schema(self) -> bool:
         """
         It checks if the number of columns in the schema file matches the number of columns in the train
@@ -103,7 +103,7 @@ class DataValidation:
             train_df_columns = train_df.columns
             test_df_columns = test_df.columns
 
-            logging.info('Validating Number of Colums')
+            logging.info('Validating Number of Columns')
             number_of_cols_validate = False
             if (len((schema_config['columns'].keys())) == (len(train_df_columns))) & (len((schema_config['columns'].keys())) == (len(test_df_columns))):
                 number_of_cols_validate = True
@@ -111,14 +111,14 @@ class DataValidation:
             else:
                 raise Exception('Number of cols are not matching')
 
-            logging.info(f'Checking weather target Columns is Avlilable]')
-            is_target_column_avilable = False
+            logging.info(f'Checking weather target Columns is Available]')
+            is_target_column_available = False
             if (schema_config['target_column'] in train_df_columns) and (schema_config['target_column'] in test_df_columns):
-                is_target_column_avilable = True
+                is_target_column_available = True
                 logging.info(
                     f'Target Column is Available [{schema_config["target_column"]}]')
             else:
-                raise Exception('target col is not availebal')
+                raise Exception('target col is not available')
 
             logging.info(
                 f'Validating Datatype of Columns with Given Schema at [{schema_file_path}]')
@@ -143,7 +143,7 @@ class DataValidation:
             else:
                 raise Exception('domain value prob')
 
-            is_schema_validated = number_of_cols_validate and is_domain_value_validate and is_target_column_avilable and data_type_of_cols_validate
+            is_schema_validated = number_of_cols_validate and is_domain_value_validate and is_target_column_available and data_type_of_cols_validate
 
             if not is_schema_validated:
                 message = f"Either Number of Columns or Datatype of Columns or Domain VAlues of Column  is Not Matched "
@@ -153,7 +153,7 @@ class DataValidation:
             return is_schema_validated
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def get_and_save_data_drift_report(self):
@@ -177,7 +177,7 @@ class DataValidation:
             return report
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def save_data_drift_report_page(self):
@@ -196,7 +196,7 @@ class DataValidation:
             dashboard.save(self.data_validation_config.report_page_file_path)
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def is_data_drift_found(self) -> bool:
@@ -210,7 +210,7 @@ class DataValidation:
 
             return True
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def initiate_data_validation(self) -> DataValidationArtifact:
@@ -233,7 +233,7 @@ class DataValidation:
                 f"Data VAlidation Artifact: [{data_validation_artifact}]")
             return data_validation_artifact
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def __del__(self):

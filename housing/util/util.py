@@ -21,7 +21,7 @@ def read_yaml_file(file_path: str) -> dict:
             return yaml.safe_load(yaml_file)
 
     except Exception as e:
-        logging.info(f"Error Occured at {HousingException(e,sys)}")
+        logging.info(f"Error Occurred at {HousingException(e,sys)}")
         raise HousingException(e, sys)
 
 
@@ -29,7 +29,7 @@ def load_data(file_path: str, schema_file_path: str) -> pd.DataFrame:
     """
     file_path : str
     schema_file_path : str
-    Validate Data Schema with shema File
+    Validate Data Schema with schema File
     return : Pandas DataFrame
     """
     try:
@@ -51,7 +51,7 @@ def load_data(file_path: str, schema_file_path: str) -> pd.DataFrame:
         return dataframe
 
     except Exception as e:
-        logging.info(f"Error Occured at {HousingException(e,sys)}")
+        logging.info(f"Error Occurred at {HousingException(e,sys)}")
         raise HousingException(e, sys)
 
 
@@ -69,7 +69,7 @@ def save_numpy_array_data(file_path: str,  array: np.array):
             np.save(file=file_obj, arr=array)
 
     except Exception as e:
-        logging.info(f"Error Occured at {HousingException(e,sys)}")
+        logging.info(f"Error Occurred at {HousingException(e,sys)}")
         raise HousingException(e, sys)
 
 
@@ -86,7 +86,7 @@ def save_object(file_path: str, obj):
             dill.dump(file=file_obj, obj=obj)
 
     except Exception as e:
-        logging.info(f"Error Occured at {HousingException(e,sys)}")
+        logging.info(f"Error Occurred at {HousingException(e,sys)}")
         raise HousingException(e, sys)
 
 
@@ -98,7 +98,7 @@ def load_numpy_array_data(file_path: str) -> np.array:
         with open(file_path, 'rb') as file_obj:
             return np.load(file_obj)
     except Exception as e:
-        logging.info(f"Error Occured at {HousingException(e,sys)}")
+        logging.info(f"Error Occurred at {HousingException(e,sys)}")
         raise HousingException(e, sys)
 
 
@@ -110,7 +110,7 @@ def load_object(file_path: str):
         with open(file_path, "rb") as file_obj:
             return dill.load(file_obj)
     except Exception as e:
-        logging.info(f"Error Occured at {HousingException(e,sys)}")
+        logging.info(f"Error Occurred at {HousingException(e,sys)}")
         raise HousingException(e, sys)
 
 

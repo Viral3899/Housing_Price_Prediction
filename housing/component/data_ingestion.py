@@ -25,7 +25,7 @@ class DataIngestion:
             self.data_ingestion_config = data_ingestion_config
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def download_housing_data(self,) -> str:
@@ -37,7 +37,7 @@ class DataIngestion:
             # extraction remote url to download url
             download_url = self.data_ingestion_config.dataset_download_url
 
-            # folder loactoin to download file
+            # folder location to download file
             tgz_download_dir = self.data_ingestion_config.tgz_download_dir
 
             os.makedirs(tgz_download_dir, exist_ok=True)
@@ -64,7 +64,7 @@ class DataIngestion:
             return tgz_file_path
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def extract_tgz_file(self, tgz_file_path: str):
@@ -91,7 +91,7 @@ class DataIngestion:
                 housing_tgz_file_obj.extractall(path=raw_data_dir)
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def split_data_as_train_test(self,) -> DataIngestionArtifact:
@@ -160,7 +160,7 @@ class DataIngestion:
             return data_ingestion_artifact
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def initiate_data_ingestion(self,) -> DataIngestionArtifact:
@@ -177,7 +177,7 @@ class DataIngestion:
             return self.split_data_as_train_test()
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def __del__(self):

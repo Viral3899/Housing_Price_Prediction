@@ -23,7 +23,7 @@ class Configuration:
             self.time_stamp = current_time_stamp
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def get_training_pipeline_config(self) -> TrainingPipelineConfig:
@@ -50,7 +50,7 @@ class Configuration:
             return training_pipline_config
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def get_data_ingestion_config(self) -> DataIngestionConfig:
@@ -110,7 +110,7 @@ class Configuration:
             return data_ingestion_config
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def get_data_validation_config(self) -> DataValidationConfig:
@@ -154,10 +154,10 @@ class Configuration:
             return data_validation_config
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
-    def get_data_transforamtion_config(self) -> DataTransformationConfig:
+    def get_data_transformation_config(self) -> DataTransformationConfig:
         """
         It takes the config file and returns a DataTransformationConfig object
         :return: DataTransformationConfig
@@ -207,7 +207,7 @@ class Configuration:
             return data_transformation_config
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def get_model_trainer_config(self) -> ModelTrainerConfig:
@@ -244,7 +244,7 @@ class Configuration:
             return model_trainer_config
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def get_model_evaluation_config(self) -> ModelEvaluationConfig:

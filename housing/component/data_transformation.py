@@ -50,7 +50,7 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
             self.total_bedrooms_ix = total_bedrooms_ix
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def fit(self, X, y=None):
@@ -93,7 +93,7 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
             return generated_feature
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
 
@@ -119,14 +119,14 @@ class DataTransformation:
 
         try:
             logging.info(
-                f"\n\n{'='*20} Data Transforamtion log Started {'='*20}\n\n")
+                f"\n\n{'='*20} Data Transformation log Started {'='*20}\n\n")
           
             self.data_transformation_config= data_transformation_config
             self.data_ingestion_artifact = data_ingestion_artifact
             self.data_validation_artifact = data_validation_artifact
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def get_data_transformer_object(self) -> ColumnTransformer:
@@ -170,7 +170,7 @@ class DataTransformation:
             return preprocessing
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def initiate_data_transformation(self) -> DataTransformationArtifact:
@@ -185,7 +185,7 @@ class DataTransformation:
 
             preprocessing_obj = self.get_data_transformer_object()
 
-            logging.info('Geting Train and Test File Path')
+            logging.info('Getting Train and Test File Path')
             train_file_path = self.data_ingestion_artifact.train_file_path
             test_file_path = self.data_ingestion_artifact.test_file_path
 
@@ -245,18 +245,18 @@ class DataTransformation:
                         obj=preprocessing_obj)
 
             data_transformation_artifact = DataTransformationArtifact(is_transformed=True,
-                                                                      message="Data transformation successfull.",
+                                                                      message="Data transformation successful.",
                                                                       transformed_train_file_path=transformed_train_file_path,
                                                                       transformed_test_file_path=transformed_test_file_path,
                                                                       preprocessed_object_file_path=preprocessing_obj_file_path
 
                                                                       )
             logging.info(
-                f"Data transformationa artifact: {data_transformation_artifact}")
+                f"Data transformation artifact: {data_transformation_artifact}")
             return data_transformation_artifact
 
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def __del__(self):

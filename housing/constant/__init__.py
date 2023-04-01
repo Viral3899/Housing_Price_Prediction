@@ -37,10 +37,10 @@ DATA_VALIDATION_REPORT_FILE_NAME_KEY = 'report_file_name'
 DATA_VALIDATION_REPORT_PAGE_FILE_NAME_KEY = 'report_page_file_name'
 
 
-# Data Transforamtion Config Constant
+# Data Transformation Config Constant
 
 DATA_TRANSFORMATION_CONFIG_KEY = 'data_transformation_config'
-DATA_TRANSFORMATION_ARTIFACT_DIR_KEY = 'data_transforamtion'
+DATA_TRANSFORMATION_ARTIFACT_DIR_KEY = 'data_transformation'
 DATA_TRANSFORMATION_ADD_BEDROOM_PER_ROOM_KEY = 'add_bedroom_per_room'
 DATA_TRANSFORMATION_TRANSFORMED_DIR_KEY = 'transformed_dir'
 DATA_TRANSFORMATION_TRANSFORMED_TRAIN_DIR_KEY = "transformed_train_dir"

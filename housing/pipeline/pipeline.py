@@ -24,7 +24,7 @@ class Pipeline:
         try:
             self.config = config
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def start_data_ingestion(self) -> DataIngestionArtifact:
@@ -39,7 +39,7 @@ class Pipeline:
 
             return data_ingestion.initiate_data_ingestion()
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def start_data_validation(self, data_ingestion_artifact: DataIngestionArtifact):
@@ -56,28 +56,28 @@ class Pipeline:
 
             return data_validation.initiate_data_validation()
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
-    def start_data_transformation(self,data_ingetion_artifact: DataIngestionArtifact,data_validation_artifact: DataValidationArtifact) -> DataValidationArtifact:
+    def start_data_transformation(self,data_ingestion_artifact: DataIngestionArtifact,data_validation_artifact: DataValidationArtifact) -> DataValidationArtifact:
         """
-        The function takes in two arguments, data_ingetion_artifact and data_validation_artifact, and
+        The function takes in two arguments, data_ingestion_artifact and data_validation_artifact, and
         returns a data_validation_artifact
         
-        :param data_ingetion_artifact: DataIngestionArtifact
-        :type data_ingetion_artifact: DataIngestionArtifact
+        :param data_ingestion_artifact: DataIngestionArtifact
+        :type data_ingestion_artifact: DataIngestionArtifact
         :param data_validation_artifact: DataValidationArtifact
         :type data_validation_artifact: DataValidationArtifact
         :return: DataValidationArtifact
         """
         try:
-            data_transformatin =DataTransformation(data_transformation_config=self.config.get_data_transforamtion_config(),
-                                                   data_ingestion_artifact=data_ingetion_artifact,
+            data_transformation =DataTransformation(data_transformation_config=self.config.get_data_transformation_config(),
+                                                   data_ingestion_artifact=data_ingestion_artifact,
                                                    data_validation_artifact=data_validation_artifact)
             
-            return data_transformatin.initiate_data_transformation()
+            return data_transformation.initiate_data_transformation()
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
     def start_model_trainer(self):
@@ -97,12 +97,12 @@ class Pipeline:
         try:
 
             data_ingestion_artifact = self.start_data_ingestion()
-            data_valiadtion_artifact = self.start_data_validation(
+            data_validation_artifact = self.start_data_validation(
                 data_ingestion_artifact=data_ingestion_artifact)
-            data_transforamtion_artifcat = self.start_data_transformation(
-                data_ingetion_artifact=data_ingestion_artifact,
-                data_validation_artifact=data_valiadtion_artifact
+            data_transformation_artifact = self.start_data_transformation(
+                data_ingestion_artifact=data_ingestion_artifact,
+                data_validation_artifact=data_validation_artifact
             )
         except Exception as e:
-            logging.info(f"Error Occured at {HousingException(e,sys)}")
+            logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
