@@ -16,7 +16,7 @@ def main():
         # print(data_val)
         # pass
     except Exception as e:
-        logging.error(f"Error Occured at {HousingException(e,sys)}")
+        logging.error(f"Error Occurred at {HousingException(e,sys)}")
         raise HousingException(e, sys)
 
 
