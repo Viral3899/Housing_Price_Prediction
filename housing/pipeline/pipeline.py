@@ -6,12 +6,13 @@ from housing.config.configuration import Configuration
 from housing.exception.exception import HousingException
 from housing.logger.logger import logging
 
-from housing.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact,DataTransformationArtifact,ModelTrainerArtifact
-from housing.entity.config_entity import DataIngestionConfig, DataTransformationConfig, DataValidationConfig,ModelTrainerConfig
+from housing.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact,DataTransformationArtifact,ModelTrainerArtifact,ModelEvaluationArtifact
+from housing.entity.config_entity import DataIngestionConfig, DataTransformationConfig, DataValidationConfig,ModelTrainerConfig,ModelEvaluationConfig
 from housing.component.data_ingestion import DataIngestion
 from housing.component.data_validation import DataValidation
 from housing.component.data_transformation import DataTransformation
 from housing.component.model_trainer import ModelTrainer
+from housing.component.model_evaluation import ModelEvaluation
 
 
 
@@ -92,7 +93,7 @@ class Pipeline:
             logging.info(f"Error Occurred at {HousingException(e,sys)}")
             raise HousingException(e, sys)
 
-    def start_model_evaluation(self):
+    def start_model_evaluation(self,data_):
         pass
 
     def start_model_pusher(self):

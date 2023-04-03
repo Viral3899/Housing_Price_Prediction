@@ -65,7 +65,8 @@ class ModelFactory:
             self.config: dict = ModelFactory.read_params(model_config_path)
             self.grid_search_cv_module: str = self.config[GRID_SEARCH_KEY][MODULE_KEY]
             self.grid_search_cv_class_name: str = self.config[GRID_SEARCH_KEY][CLASS_KEY]
-            self.grid_search_cv_property_data: dict = self.config[GRID_SEARCH_KEY][PARAM_KEY]
+            self.grid_search_cv_property_data: dict = dict(
+                self.config[GRID_SEARCH_KEY][PARAM_KEY])
 
             self.model_initialization_config: dict = dict(
                 self.config[MODEL_SELECTION_KEY])
@@ -99,7 +100,7 @@ class ModelFactory:
         """
         It takes an instance of a class and a dictionary of properties and values and updates the
         instance with the values in the dictionary
-        
+
         :param instance_ref: object
         :type instance_ref: object
         :type property_data: dict
@@ -142,8 +143,8 @@ class ModelFactory:
             raise HousingException(e, sys)
 
     @staticmethod
-    def get_best_from_grid_searched_best_model_list(grid_searched_best_model_list: List[GridSearchedBestModel],
-                                                    base_accuracy=0.6) -> BestModel:
+    def get_best_model_from_grid_searched_best_model_list(grid_searched_best_model_list: List[GridSearchedBestModel],
+                                                          base_accuracy=0.6) -> BestModel:
         """
         It takes a list of GridSearchedBestModel objects and returns the best model from the list
 
@@ -160,12 +161,13 @@ class ModelFactory:
                         f'Acceptable Model Found {grid_searched_best_model}')
                     base_accuracy = grid_searched_best_model.best_score
                     best_model = grid_searched_best_model
-                if not best_model:
-                    raise Exception(
-                        f'None of the Model has Base Accuracy : {base_accuracy}')
-                logging.info(f'best Model {best_model}')
 
-                return best_model
+            if not best_model:
+                raise Exception(
+                    f'None of the Model has Base Accuracy : {base_accuracy}')
+            logging.info(f'best Model {best_model}')
+
+            return best_model
 
         except Exception as e:
             logging.info(f'Error Occurred at {HousingException(e,sys)}')
@@ -194,10 +196,10 @@ class ModelFactory:
             grid_search_cv = ModelFactory.update_property_of_class(grid_search_cv_model,
                                                                    self.grid_search_cv_property_data
                                                                    )
-            message = f'{">>"* 30} f"Training {type(initialized_model.model).__name__} Started." {"<<"*30}'
+            message = f'{"$$"* 30} f"Training {type(initialized_model.model).__name__} Started." {"$$"*30}'
             logging.info(message)
             grid_search_cv.fit(input_feature, output_feature)
-            message = f'{">>"* 30} f"Training {type(initialized_model.model).__name__}" completed {"<<"*30}'
+            message = f'{"##"* 30} f"Training {type(initialized_model.model).__name__}" completed {"##"*30}'
             grid_searched_best_model = GridSearchedBestModel(model_serial_number=initialized_model.model_serial_number,
                                                              model=initialized_model.model,
                                                              best_model=grid_search_cv.best_estimator_,
@@ -209,7 +211,7 @@ class ModelFactory:
         except Exception as e:
             logging.info(f'Error Occurred at {HousingException(e,sys)}')
             raise HousingException(e, sys)
-   
+
     def get_initialized_model_list(self) -> List[InitializedModelDetail]:
         """
         This function will return a list of model details.
@@ -224,9 +226,10 @@ class ModelFactory:
                                                             class_name=model_initialization_config[CLASS_KEY]
                                                             )
                 model = model_obj_ref()
-                
+
                 if PARAM_KEY in model_initialization_config:
-                    model_obj_property_data = dict(model_initialization_config[PARAM_KEY])
+                    model_obj_property_data = dict(
+                        model_initialization_config[PARAM_KEY])
                     model = ModelFactory.update_property_of_class(instance_ref=model,
                                                                   property_data=model_obj_property_data)
 
@@ -245,8 +248,8 @@ class ModelFactory:
             return self.initialized_model_list
         except Exception as e:
             logging.info(f'Error Occurred at {HousingException(e,sys)}')
-            raise HousingException(e, sys)
-        
+            raise HousingException(e, sys) from e
+
     def initiate_best_parameter_search_for_initialized_model(self, initialized_model: InitializedModelDetail,
                                                              input_feature,
                                                              output_feature) -> GridSearchedBestModel:
@@ -265,6 +268,7 @@ class ModelFactory:
                                                       input_feature=input_feature,
                                                       output_feature=output_feature)
         except Exception as e:
+            logging.info(f'Error Occurred at {HousingException(e,sys)}')
             raise HousingException(e, sys) from e
 
     def initiate_best_parameter_search_for_initialized_models(self, initialized_model_list: List[InitializedModelDetail],
@@ -285,12 +289,12 @@ class ModelFactory:
             self.grid_searched_best_model_list = []
             for initialized_model in initialized_model_list:
                 grid_search_best_model = self.initiate_best_parameter_search_for_initialized_model(initialized_model=initialized_model,
-                                                                            input_feature=input_feature,
-                                                                            output_feature=output_feature
-                                                                            )
+                                                                                                   input_feature=input_feature,
+                                                                                                   output_feature=output_feature
+                                                                                                   )
                 self.grid_searched_best_model_list.append(
                     grid_search_best_model)
-                return self.grid_searched_best_model_list
+            return self.grid_searched_best_model_list
 
         except Exception as e:
             logging.info(f'Error Occurred at {HousingException(e,sys)}')
@@ -304,8 +308,8 @@ class ModelFactory:
             grid_search_best_model = self.initiate_best_parameter_search_for_initialized_models(initialized_model_list=initialized_model_list,
                                                                                                 input_feature=X,
                                                                                                 output_feature=y)
-            return ModelFactory.get_best_from_grid_searched_best_model_list(grid_search_best_model,
-                                                                            base_accuracy=base_accuracy)
+            return ModelFactory.get_best_model_from_grid_searched_best_model_list(grid_search_best_model,
+                                                                                  base_accuracy=base_accuracy)
 
         except Exception as e:
             logging.info(f'Error Occurred at {HousingException(e,sys)}')
@@ -313,13 +317,13 @@ class ModelFactory:
 
 
 def evaluate_regression_model(model_list: list,
-                              X_train: np.ndarray, y_train: np.ndarray, 
-                              X_test: np.ndarray, y_test: np.ndarray, 
+                              X_train: np.ndarray, y_train: np.ndarray,
+                              X_test: np.ndarray, y_test: np.ndarray,
                               base_accuracy: float = 0.6) -> MetricInfoArtifact:
     """
     It takes a list of regression models, training and testing data, and a base accuracy. It then
     evaluates each model in the list and returns the model with the highest accuracy
-    
+
     :param model_list: list of models to be evaluated
     :type model_list: list
     :param X_train: The training data
