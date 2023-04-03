@@ -99,12 +99,11 @@ class ModelFactory:
         """
         It takes an instance of a class and a dictionary of properties and values and updates the
         instance with the values in the dictionary
-
+        
         :param instance_ref: object
         :type instance_ref: object
-        :param property_data: {'name': 'test', 'age': 'test', 'gender': 'test', 'address': 'test',
-        'phone': 'test', 'email': 'test', 'password': 'test', 'confirm_password': 'test'}
         :type property_data: dict
+        :return: The instance of the class with the updated values
         """
         try:
             if not isinstance(property_data, dict):
@@ -190,7 +189,7 @@ class ModelFactory:
                                                              class_name=self.grid_search_cv_class_name
                                                              )
             grid_search_cv_model = grid_search_cv_ref(estimator=initialized_model.model,
-                                                      param_grid=initialized_model.model_serial_number
+                                                      param_grid=initialized_model.param_grid_search
                                                       )
             grid_search_cv = ModelFactory.update_property_of_class(grid_search_cv_model,
                                                                    self.grid_search_cv_property_data
@@ -210,33 +209,30 @@ class ModelFactory:
         except Exception as e:
             logging.info(f'Error Occurred at {HousingException(e,sys)}')
             raise HousingException(e, sys)
-
-    def  get_initialized_model_list(self) -> List[InitializedModelDetail]:
+   
+    def get_initialized_model_list(self) -> List[InitializedModelDetail]:
         """
-        It takes a dictionary of model initialization configurations, and returns a list of initialized
-        models
-        :return: A list of InitializedModelDetail objects
+        This function will return a list of model details.
+        return List[ModelDetail]
         """
         try:
             initialized_model_list = []
-
             for model_serial_number in self.model_initialization_config.keys():
 
                 model_initialization_config = self.model_initialization_config[model_serial_number]
                 model_obj_ref = ModelFactory.class_for_name(module_name=model_initialization_config[MODULE_KEY],
                                                             class_name=model_initialization_config[CLASS_KEY]
                                                             )
-
                 model = model_obj_ref()
+                
                 if PARAM_KEY in model_initialization_config:
-                    model_obj_property_data = dict(
-                        model_initialization_config[PARAM_KEY])
+                    model_obj_property_data = dict(model_initialization_config[PARAM_KEY])
                     model = ModelFactory.update_property_of_class(instance_ref=model,
                                                                   property_data=model_obj_property_data)
 
                 param_grid_search = model_initialization_config[SEARCH_PARAM_GRID_KEY]
+                model_name = f"{model_initialization_config[MODULE_KEY]}.{model_initialization_config[CLASS_KEY]}"
 
-                model_name = f'{model_initialization_config[MODULE_KEY]}.{model_initialization_config[CLASS_KEY]}'
                 model_initialization_config = InitializedModelDetail(model_serial_number=model_serial_number,
                                                                      model=model,
                                                                      param_grid_search=param_grid_search,
@@ -250,6 +246,26 @@ class ModelFactory:
         except Exception as e:
             logging.info(f'Error Occurred at {HousingException(e,sys)}')
             raise HousingException(e, sys)
+        
+    def initiate_best_parameter_search_for_initialized_model(self, initialized_model: InitializedModelDetail,
+                                                             input_feature,
+                                                             output_feature) -> GridSearchedBestModel:
+        """
+        initiate_best_model_parameter_search(): function will perform paramter search operation and
+        it will return you the best optimistic  model with best paramter:
+        estimator: Model object
+        param_grid: dictionary of paramter to perform search operation
+        input_feature: your all input features
+        output_feature: Target/Dependent features
+        ================================================================================
+        return: Function will return a GridSearchOperation
+        """
+        try:
+            return self.execute_grid_search_operation(initialized_model=initialized_model,
+                                                      input_feature=input_feature,
+                                                      output_feature=output_feature)
+        except Exception as e:
+            raise HousingException(e, sys) from e
 
     def initiate_best_parameter_search_for_initialized_models(self, initialized_model_list: List[InitializedModelDetail],
                                                               input_feature,
@@ -268,7 +284,7 @@ class ModelFactory:
         try:
             self.grid_searched_best_model_list = []
             for initialized_model in initialized_model_list:
-                grid_search_best_model = self.execute_grid_search_operation(initialized_model=initialized_model_list,
+                grid_search_best_model = self.initiate_best_parameter_search_for_initialized_model(initialized_model=initialized_model,
                                                                             input_feature=input_feature,
                                                                             output_feature=output_feature
                                                                             )
