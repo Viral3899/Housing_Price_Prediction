@@ -35,18 +35,18 @@ class HousingEstimatorModel:
     def predict(self, X):
 
         try:
-            transformed_features = self.preprocessing_object(X)
-
-            return self.trained_model_object.predict(transformed_features)
+            transformed_features = self.preprocessing_object.transform(X)
+            predictions = self.trained_model_object.predict(transformed_features)
+            return predictions
         except Exception as e:
             logging.info(f'Error Occurred at {HousingException(e,sys)}')
             raise HousingException(e, sys)
 
     def __repr__(self) -> str:
-        return f"{type(self.trained_model_object.__name__)}()"
+        return f"{type(self.trained_model_object).__name__}()"
 
     def __str__(self) -> str:
-        return f"{type(self.trained_model_object.__name__)}()"
+        return f"{type(self.trained_model_object).__name__}()"
 
 
 class ModelTrainer:

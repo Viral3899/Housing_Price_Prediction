@@ -1,11 +1,12 @@
+import os
+import sys
+import shutil
+
 from housing.exception.exception import HousingException
 from housing.logger.logger import logging
 from housing.entity.artifact_entity import ModelPusherArtifact, ModelEvaluationArtifact 
 from housing.entity.config_entity import ModelPusherConfig
 
-import os
-import sys
-import shutil
 
 
 class ModelPusher:
@@ -27,7 +28,7 @@ class ModelPusher:
             evaluated_model_file_path = self.model_evaluation_artifact.evaluated_model_path
             export_dir = self.model_pusher_config.export_dir_path
             model_file_name = os.path.basename(evaluated_model_file_path)
-            export_model_file_path = os.path.join(export_dir,export_model_file_path)
+            export_model_file_path = os.path.join(export_dir,model_file_name)
             logging.info(f'Exporting Model File :[{export_model_file_path}]')
             os.makedirs(export_dir,exist_ok=True)
             

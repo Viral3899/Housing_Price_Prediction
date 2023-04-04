@@ -344,7 +344,6 @@ def evaluate_regression_model(model_list: list,
         index_number = 0
         metric_info_artifact = None
         for model in model_list:
-            print(model)
             model_name = str(model)
             logging.info(
                 f'{"+"*20} Started Evaluating model : [{type(model).__name__}] {"+"*20}')
@@ -380,7 +379,7 @@ def evaluate_regression_model(model_list: list,
                          Difference between train and test acc : -->>>> {diff_train_test_acc}
                          """)
 
-            if model_accuracy >= base_accuracy and diff_train_test_acc < 0.05:
+            if round(model_accuracy,3) >= round(base_accuracy,3) and diff_train_test_acc < 0.05:
                 base_accuracy = model_accuracy
                 metric_info_artifact = MetricInfoArtifact(model_name=model_name,
                                                           model_object=model,
@@ -393,6 +392,7 @@ def evaluate_regression_model(model_list: list,
                                                           )
                 logging.info(f"Acceptable Model Found {metric_info_artifact}.")
 
+            print(metric_info_artifact)
             index_number += 1
         if metric_info_artifact is None:
             logging.info(
