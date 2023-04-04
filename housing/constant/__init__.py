@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 def get_current_time_stamp():
-    return f"{datetime.now().strftime('%Y-%m-%d-%H-%M')}"
+    return f"{datetime.now().strftime('%Y-%m-%d-%H-%M-%S')}"
 
 
 ROOT_DIR = os.getcwd()  # to get Current Working Directory

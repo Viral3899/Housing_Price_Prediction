@@ -344,6 +344,7 @@ def evaluate_regression_model(model_list: list,
         index_number = 0
         metric_info_artifact = None
         for model in model_list:
+            print(model)
             model_name = str(model)
             logging.info(
                 f'{"+"*20} Started Evaluating model : [{type(model).__name__}] {"+"*20}')

@@ -99,8 +99,12 @@ class ModelEvaluation:
             schema_file_path = self.data_validation_artifact.schema_file_path
             
             logging.info('Loading data for model evaluation')
-            train_dataframe = load_data(file_path=trained_model_file_path,schema_file_path=schema_file_path)
-            test_dataframe = load_data(file_path=test_file_path,schema_file_path=schema_file_path)
+            train_dataframe = load_data(file_path=train_file_path,
+                                        schema_file_path=schema_file_path
+                                        )
+            test_dataframe = load_data(file_path=test_file_path,
+                                       schema_file_path=schema_file_path
+                                        )
             
             schema_content = read_yaml_file(file_path=schema_file_path)
             
@@ -125,6 +129,7 @@ class ModelEvaluation:
                 return model_evaluation_artifact
             
             model_list = [model, trained_model_object]
+            print(model_list)
             metric_info_artifact = evaluate_regression_model(model_list=model_list,
                                                     X_train=train_dataframe,
                                                     y_train=train_target,
