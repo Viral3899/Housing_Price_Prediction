@@ -317,28 +317,29 @@ class ModelFactory:
 
 
 def evaluate_regression_model(model_list: list,
-                              X_train: np.ndarray, y_train: np.ndarray,
+                              X_train: np.ndarray,y_train: np.ndarray,
                               X_test: np.ndarray, y_test: np.ndarray,
                               base_accuracy: float = 0.6) -> MetricInfoArtifact:
     """
-    It takes a list of regression models, training and testing data, and a base accuracy. It then
-    evaluates each model in the list and returns the model with the highest accuracy
-
-    :param model_list: list of models to be evaluated
+    This function evaluates a list of regression models based on their accuracy and root mean squared
+    error, and returns the best model that meets certain criteria.
+    
+    :param model_list: A list of regression models to be evaluated
     :type model_list: list
-    :param X_train: The training data
+    :param X_train: A numpy array containing the features of the training dataset
     :type X_train: np.ndarray
-    :param y_train: The target variable for the training dataset
+    :param y_train: The target variable values for the training dataset
     :type y_train: np.ndarray
-    :param X_test: The test data
+    :param X_test: The input features for the testing dataset
     :type X_test: np.ndarray
-    :param y_test: The actual values of the target variable
+    :param y_test: y_test is a numpy array containing the true target values for the testing dataset
     :type y_test: np.ndarray
-    :param base_accuracy: This is the minimum accuracy that we want to achieve. If none of the models in
-    the list achieves this accuracy, then we will return None
+    :param base_accuracy: The minimum acceptable accuracy for a model to be considered as a good model.
+    It has a default value of 0.6
     :type base_accuracy: float
-    :return: MetricInfoArtifact
+    :return: a MetricInfoArtifact object.
     """
+    
 
     try:
         index_number = 0

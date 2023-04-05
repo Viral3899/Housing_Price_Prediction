@@ -5,8 +5,6 @@ from flask import Flask,request,render_template
 from housing.exception.exception import HousingException
 from housing.logger.logger import logging
 
-# import pandas as pand
-
 app=Flask(__name__)
 
 @app.route("/", methods=['GET', 'POST'])

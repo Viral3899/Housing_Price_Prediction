@@ -13,6 +13,19 @@ class ModelPusher:
     
     def __init__(self,model_pusher_config:ModelPusherConfig,
                  model_evaluation_artifact:ModelEvaluationArtifact) -> None:
+        """
+        This is a constructor function that initializes the model pusher configuration and model
+        evaluation artifact.
+        
+        :param model_pusher_config: It is an object of the class ModelPusherConfig, which contains the
+        configuration settings for the model pusher
+        :type model_pusher_config: ModelPusherConfig
+        :param model_evaluation_artifact: This parameter is an instance of the class
+        ModelEvaluationArtifact, which contains information about the evaluation of a machine learning
+        model. It may include metrics such as accuracy, precision, recall, and F1 score, as well as any
+        other relevant information about the model's performance
+        :type model_evaluation_artifact: ModelEvaluationArtifact
+        """
         try:
             logging.info(f"{'=' * 30}Model Pusher log started.{'=' * 30} ")
             self.model_pusher_config = model_pusher_config
@@ -24,6 +37,11 @@ class ModelPusher:
         
     
     def export_model(self) -> ModelPusherArtifact:
+        """
+        This function exports a trained model to a specified directory and returns a ModelPusherArtifact
+        object.
+        :return: a `ModelPusherArtifact` object.
+        """
         try:
             evaluated_model_file_path = self.model_evaluation_artifact.evaluated_model_path
             export_dir = self.model_pusher_config.export_dir_path
@@ -49,6 +67,11 @@ class ModelPusher:
             raise HousingException(e, sys)
         
     def initiate_model_pusher(self) -> ModelPusherArtifact:
+        """
+        This function attempts to export a model and returns a ModelPusherArtifact, but raises a
+        HousingException if there is an exception.
+        :return: an instance of the `ModelPusherArtifact` class.
+        """
         try:
             return self.export_model()
         except Exception as e:

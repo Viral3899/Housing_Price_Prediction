@@ -102,6 +102,17 @@ class Pipeline(Thread):
             raise HousingException(e, sys)
 
     def start_model_trainer(self,data_transformation_artifact: DataTransformationArtifact) -> ModelTrainerArtifact:
+        """
+        This function initializes and returns a model trainer artifact using a data transformation
+        artifact.
+        
+        :param data_transformation_artifact: The data_transformation_artifact parameter is an object of
+        the DataTransformationArtifact class, which contains the transformed data that will be used for
+        training the machine learning model. This object is passed as an argument to the ModelTrainer
+        class constructor to initialize the model trainer
+        :type data_transformation_artifact: DataTransformationArtifact
+        :return: an instance of the `ModelTrainerArtifact` class.
+        """
         try:
             model_trainer = ModelTrainer(model_trainer_config=self.config.get_model_trainer_config(),
                                          data_transformation_artifact=data_transformation_artifact
@@ -114,6 +125,25 @@ class Pipeline(Thread):
     def start_model_evaluation(self,data_ingestion_artifact: DataIngestionArtifact,
                                data_validation_artifact : DataValidationArtifact,
                                model_trainer_artifact : ModelTrainerArtifact) -> ModelEvaluationArtifact:
+        """
+        This function initiates model evaluation using data ingestion, data validation, and model
+        trainer artifacts.
+        
+        :param data_ingestion_artifact: An object that contains the data ingestion artifact, which
+        includes information about the data that was ingested for the model
+        :type data_ingestion_artifact: DataIngestionArtifact
+        :param data_validation_artifact: DataValidationArtifact is an object that contains the results
+        of data validation performed on the input data. It includes information such as the number of
+        records validated, the number of records that passed validation, and the number of records that
+        failed validation. This artifact is used as input to the model evaluation process to ensure
+        :type data_validation_artifact: DataValidationArtifact
+        :param model_trainer_artifact: This parameter is an instance of the ModelTrainerArtifact class,
+        which contains the trained machine learning model and other relevant information such as feature
+        engineering and hyperparameters used during training. It is used as an input to the
+        ModelEvaluation class to evaluate the performance of the trained model on new data
+        :type model_trainer_artifact: ModelTrainerArtifact
+        :return: a ModelEvaluationArtifact object.
+        """
         try:
             model_evaluator = ModelEvaluation(
                 model_evaluation_config=self.config.get_model_evaluation_config(),
@@ -127,6 +157,17 @@ class Pipeline(Thread):
             raise HousingException(e, sys)
 
     def start_model_pusher(self,model_evaluation_artifact:ModelEvaluationArtifact):
+        """
+        This function initiates a model pusher with a given configuration and model evaluation artifact.
+        
+        :param model_evaluation_artifact: The model_evaluation_artifact parameter is an object of the
+        ModelEvaluationArtifact class, which contains information about the model evaluation results
+        such as the model file path, evaluation metrics, and any additional metadata. This object is
+        used by the ModelPusher class to push the model to a deployment environment
+        :type model_evaluation_artifact: ModelEvaluationArtifact
+        :return: The method is returning the result of calling the `initiate_model_pusher()` method of
+        an instance of the `ModelPusher` class.
+        """
         try:
             model_pusher = ModelPusher(
                 model_pusher_config=self.config.get_model_pusher_config(),
@@ -208,6 +249,10 @@ class Pipeline(Thread):
             raise HousingException(e, sys)
         
     def run(self):
+        """
+        This function runs a pipeline and catches any exceptions that occur, logging the error and
+        raising a custom exception.
+        """
         try:
             self.run_pipeline()
         except Exception as e:
@@ -216,6 +261,9 @@ class Pipeline(Thread):
         
         
     def save_experiment(self):
+        """
+        This function saves experiment data to a CSV file.
+        """
         try:
             if Pipeline.experiment.experiment_id is not None:
                 experiment = Pipeline.experiment
@@ -242,6 +290,21 @@ class Pipeline(Thread):
         
     @classmethod
     def get_experiments_status(cls, limit: int = 5) -> pd.DataFrame:
+        """
+        This function reads a CSV file containing experiment data and returns a pandas DataFrame with
+        the most recent experiments up to a specified limit.
+        
+        :param cls: The parameter `cls` is a reference to the class itself. It is commonly used in class
+        methods to access class-level variables or methods
+        :param limit: The limit parameter is an integer that specifies the number of most recent
+        experiments to retrieve from the experiment file. If not specified, the default value is 5,
+        defaults to 5
+        :type limit: int (optional)
+        :return: A pandas DataFrame containing the status of the experiments, with a limit on the number
+        of rows returned. The columns "experiment_file_path" and "initialization_timestamp" are dropped
+        from the DataFrame. If the experiment file path does not exist, an empty DataFrame is returned.
+        If an error occurs, a HousingException is raised with the error message and system information.
+        """
         try:
             if os.path.exists(Pipeline.experiment_file_path):
                 df = pd.read_csv(Pipeline.experiment_file_path)

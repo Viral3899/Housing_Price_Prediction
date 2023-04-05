@@ -248,6 +248,14 @@ class Configuration:
             raise HousingException(e, sys)
 
     def get_model_evaluation_config(self) -> ModelEvaluationConfig:    
+        """
+        This function retrieves the model evaluation configuration from a specified file path and
+        returns it as a ModelEvaluationConfig object.
+        :return: an instance of the `ModelEvaluationConfig` class with the `model_evaluation_file_path`
+        and `time_stamp` attributes set based on the values obtained from the `config_info` dictionary
+        and `training_pipeline_config` object. The function also logs the returned
+        `ModelEvaluationConfig` instance.
+        """
         
         try:
             model_evaluation_config = self.config_info[MODEL_EVALUATION_CONFIG_KEY]
@@ -267,6 +275,14 @@ class Configuration:
             raise HousingException(e, sys)
 
     def get_model_pusher_config(self) -> ModelPusherConfig:
+        """
+        This function returns a ModelPusherConfig object with an export directory path based on the time
+        stamp and configuration information.
+        :return: an instance of the `ModelPusherConfig` class with the `export_dir_path` attribute set
+        to a directory path created using the `ROOT_DIR` constant, `MODEL_PUSHER_MODEL_EXPORT_DIR_KEY`
+        key from the `config_info` dictionary, and the `time_stamp` attribute of the class instance. If
+        an exception occurs, the function raises a `Housing
+        """
         try:
             time_stamp = str(self.time_stamp).replace('-','')
             model_pusher_config_info = self.config_info[MODEL_PUSHER_CONFIG_KEY]

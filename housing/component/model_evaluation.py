@@ -20,6 +20,30 @@ class ModelEvaluation:
                  data_ingestion_artifact: DataIngestionArtifact,
                  data_validation_artifact: DataValidationArtifact,
                  model_trainer_artifact: ModelTrainerArtifact) -> None:
+        """
+        This is the constructor function for a class that takes in several artifacts and a configuration
+        object and initializes them as class attributes.
+        
+        :param model_evaluation_config: An object of the class ModelEvaluationConfig, which contains the
+        configuration settings for model evaluation
+        :type model_evaluation_config: ModelEvaluationConfig
+        :param data_ingestion_artifact: It is an object of the class DataIngestionArtifact, which
+        contains information and artifacts related to the data ingestion process of the machine learning
+        model. This could include data sources, data preprocessing steps, and data cleaning techniques
+        :type data_ingestion_artifact: DataIngestionArtifact
+        :param data_validation_artifact: DataValidationArtifact is an object that contains information
+        about the data validation process for the model. It may include details such as the validation
+        metrics used, the validation dataset, and any preprocessing steps applied to the data before
+        validation. This parameter is passed to the constructor of a class that is responsible for
+        evaluating the
+        :type data_validation_artifact: DataValidationArtifact
+        :param model_trainer_artifact: This parameter is an instance of the class ModelTrainerArtifact,
+        which contains the artifacts generated during the model training process. These artifacts may
+        include the trained model, feature transformers, and other necessary objects for making
+        predictions. The ModelTrainerArtifact is used in the model evaluation process to load the
+        trained model
+        :type model_trainer_artifact: ModelTrainerArtifact
+        """
 
         try:
             logging.info(
@@ -33,6 +57,12 @@ class ModelEvaluation:
             raise HousingException(e, sys)
 
     def get_best_model(self,):
+        """
+        This function retrieves the best model from a saved model evaluation file.
+        :return: a trained machine learning model that has been saved as a file, or None if the file
+        does not exist or if the best model has not been evaluated yet. If an error occurs, a
+        HousingException is raised.
+        """
         try:
             model = None
             model_evaluation_file_path = self.model_evaluation_config.model_evaluation_file_path
@@ -59,6 +89,14 @@ class ModelEvaluation:
             raise HousingException(e, sys)
 
     def update_evaluation_report(self, model_evaluation_artifact: ModelEvaluationArtifact):
+        """
+        This function updates a model evaluation report with the results of a new model evaluation.
+        
+        :param model_evaluation_artifact: The parameter `model_evaluation_artifact` is an object of the
+        class `ModelEvaluationArtifact` which contains information about the evaluated model such as the
+        path to the model file
+        :type model_evaluation_artifact: ModelEvaluationArtifact
+        """
         try:
             eval_file_path = self.model_evaluation_config.model_evaluation_file_path
             model_eval_content = read_yaml_file(file_path=eval_file_path)
@@ -93,6 +131,11 @@ class ModelEvaluation:
             raise HousingException(e, sys)
 
     def initiate_model_evaluation(self) -> ModelEvaluationArtifact:
+        """
+        This function evaluates a trained model and compares it with an existing model, and returns a
+        ModelEvaluationArtifact indicating whether the trained model is accepted or not.
+        :return: a ModelEvaluationArtifact object.
+        """
         try:
             trained_model_file_path = self.model_trainer_artifact.trained_model_file_path
             trained_model_object = load_object(

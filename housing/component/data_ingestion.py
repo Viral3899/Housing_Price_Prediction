@@ -19,6 +19,15 @@ from housing.entity.artifact_entity import DataIngestionArtifact
 class DataIngestion:
 
     def __init__(self, data_ingestion_config: DataIngestionConfig):
+        """
+        This is a constructor function that initializes a class object with a data ingestion
+        configuration and logs any errors that occur.
+        
+        :param data_ingestion_config: The parameter `data_ingestion_config` is an instance of the
+        `DataIngestionConfig` class, which contains configuration information for data ingestion. This
+        parameter is passed to the constructor of a class that is being initialized
+        :type data_ingestion_config: DataIngestionConfig
+        """
         try:
             logging.info(
                 f"\n\n{'='*20} Data Ingestion log Started {'='*20}\n\n")
@@ -118,16 +127,16 @@ class DataIngestion:
             )
 
             logging.info(f'Splitting Data into Train Test')
-            strat_train_set = None
-            strat_test_set = None
+            start_train_set = None
+            start_test_set = None
 
             split = StratifiedShuffleSplit(
                 n_splits=1, test_size=0.2, random_state=0)
 
             for train_index, test_index in split.split(housing_data_frame, housing_data_frame["income_category"]):
-                strat_train_set = housing_data_frame.loc[train_index].drop(
+                start_train_set = housing_data_frame.loc[train_index].drop(
                     ["income_category"], axis=1)
-                strat_test_set = housing_data_frame.loc[test_index].drop(
+                start_test_set = housing_data_frame.loc[test_index].drop(
                     ["income_category"], axis=1)
 
             train_file_path = os.path.join(
@@ -135,19 +144,19 @@ class DataIngestion:
             test_file_path = os.path.join(
                 self.data_ingestion_config.ingested_test_dir, file_name)
 
-            if strat_train_set is not None:
+            if start_train_set is not None:
                 os.makedirs(
                     self.data_ingestion_config.ingested_train_dir, exist_ok=True)
                 logging.info(
                     f'Exporting training Dataset into [{train_file_path}]')
-                strat_train_set.to_csv(train_file_path, index=False)
+                start_train_set.to_csv(train_file_path, index=False)
 
-            if strat_test_set is not None:
+            if start_test_set is not None:
                 os.makedirs(
                     self.data_ingestion_config.ingested_test_dir, exist_ok=True)
                 logging.info(
                     f'Exporting testing Dataset into [{test_file_path}]')
-                strat_test_set.to_csv(test_file_path, index=False)
+                start_test_set.to_csv(test_file_path, index=False)
 
             data_ingestion_artifact = DataIngestionArtifact(train_file_path=train_file_path,
                                                             test_file_path=test_file_path,

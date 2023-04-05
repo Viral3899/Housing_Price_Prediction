@@ -13,7 +13,7 @@ HYPHEN_E_DOT='-e .'
 
 def get_requirements():
     """
-    This Function returns the list of Requirements from requirements.txt & all the Packeges.
+    This Function returns the list of Requirements from requirements.txt & all the Packages.
     """
 
     with open('requirements.txt') as file_obj:

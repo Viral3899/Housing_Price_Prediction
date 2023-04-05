@@ -21,9 +21,19 @@ from housing.config.configuration import Configuration
 
 class DataValidation:
 
-    def __init__(self, data_validation_config: DataValidationConfig,
-
-                 data_ingestion_artifact: DataIngestionArtifact):
+    def __init__(self, data_validation_config: DataValidationConfig,data_ingestion_artifact: DataIngestionArtifact):
+        """
+        This is a constructor function that initializes the data validation configuration and data
+        ingestion artifact, and logs any errors that occur.
+        
+        :param data_validation_config: This parameter is of type DataValidationConfig and contains the
+        configuration settings for data validation
+        :type data_validation_config: DataValidationConfig
+        :param data_ingestion_artifact: DataIngestionArtifact is an object that contains information
+        about the data that has been ingested, such as the file path, file format, and any other
+        relevant metadata
+        :type data_ingestion_artifact: DataIngestionArtifact
+        """
         try:
             logging.info(
                 f"\n\n{'='*20} Data Validation log Started {'='*20}\n\n")
