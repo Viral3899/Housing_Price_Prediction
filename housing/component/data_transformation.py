@@ -56,7 +56,7 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
     def fit(self, X, y=None):
         """
         The fit function is used to fit the data into the model
-        
+
         :param X: A numpy array or sparse matrix of shape [n_samples, n_features]
         :param y: the target variable
         :return: The fit method returns the instance of the class.
@@ -67,7 +67,7 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
         """
         It takes the total number of rooms in a district, divides it by the number of households, and
         adds this value to the data as a new attribute
-        
+
         :param X: The input data
         :param y: The target variable
         :return: The generated feature is being returned.
@@ -100,13 +100,12 @@ class FeatureGenerator(BaseEstimator, TransformerMixin):
 class DataTransformation:
 
     def __init__(self, data_transformation_config: DataTransformationConfig,
-                 data_ingestion_artifact: DataIngestionArtifact
-                 ,data_validation_artifact: DataValidationArtifact
+                 data_ingestion_artifact: DataIngestionArtifact, data_validation_artifact: DataValidationArtifact
                  ):
         """
         The function takes in three arguments: data_transformation_config, data_ingestion_artifact,
         data_validation_artifact
-        
+
         :param data_transformation_config: This is a class that contains the configuration for the data
         transformation
         :type data_transformation_config: DataTransformationConfig
@@ -120,8 +119,8 @@ class DataTransformation:
         try:
             logging.info(
                 f"\n\n{'='*20} Data Transformation log Started {'='*20}\n\n")
-          
-            self.data_transformation_config= data_transformation_config
+
+            self.data_transformation_config = data_transformation_config
             self.data_ingestion_artifact = data_ingestion_artifact
             self.data_validation_artifact = data_validation_artifact
 
@@ -202,29 +201,36 @@ class DataTransformation:
             dataset_schema = read_yaml_file(schema_file_path)
             target_column_name = dataset_schema[TARGET_COLUMN_KEY]
 
-            logging.info(f"Splitting input and target feature from training and testing dataframe.")
-            input_feature_train_df = train_df.drop(columns=[target_column_name],axis=1)
+            logging.info(
+                f"Splitting input and target feature from training and testing dataframe.")
+            input_feature_train_df = train_df.drop(
+                columns=[target_column_name], axis=1)
             target_feature_train_df = train_df[target_column_name]
 
-            input_feature_test_df = test_df.drop(columns=[target_column_name],axis=1)
+            input_feature_test_df = test_df.drop(
+                columns=[target_column_name], axis=1)
             target_feature_test_df = test_df[target_column_name]
-            
 
-            logging.info(f"Applying preprocessing object on training dataframe and testing dataframe")
-            input_feature_train_arr=preprocessing_obj.fit_transform(input_feature_train_df)
-            input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
+            logging.info(
+                f"Applying preprocessing object on training dataframe and testing dataframe")
+            input_feature_train_arr = preprocessing_obj.fit_transform(
+                input_feature_train_df)
+            input_feature_test_arr = preprocessing_obj.transform(
+                input_feature_test_df)
 
+            train_arr = np.c_[input_feature_train_arr,
+                              np.array(target_feature_train_df)]
 
-            train_arr = np.c_[ input_feature_train_arr, np.array(target_feature_train_df)]
+            test_arr = np.c_[input_feature_test_arr,
+                             np.array(target_feature_test_df)]
 
-            test_arr = np.c_[input_feature_test_arr, np.array(target_feature_test_df)]
-            
             transformed_train_dir = self.data_transformation_config.transformed_train_dir
             transformed_test_dir = self.data_transformation_config.transformed_test_dir
 
-            train_file_name = os.path.basename(train_file_path).replace(".csv",".npz")
-            test_file_name = os.path.basename(test_file_path).replace(".csv",".npz")
-
+            train_file_name = os.path.basename(
+                train_file_path).replace(".csv", ".npz")
+            test_file_name = os.path.basename(
+                test_file_path).replace(".csv", ".npz")
 
             transformed_train_file_path = os.path.join(
                 transformed_train_dir, train_file_name)

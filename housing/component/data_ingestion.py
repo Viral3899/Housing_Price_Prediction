@@ -22,7 +22,7 @@ class DataIngestion:
         """
         This is a constructor function that initializes a class object with a data ingestion
         configuration and logs any errors that occur.
-        
+
         :param data_ingestion_config: The parameter `data_ingestion_config` is an instance of the
         `DataIngestionConfig` class, which contains configuration information for data ingestion. This
         parameter is passed to the constructor of a class that is being initialized
@@ -79,7 +79,7 @@ class DataIngestion:
     def extract_tgz_file(self, tgz_file_path: str):
         """
         It extracts the contents of a tgz file to a directory
-        
+
         :param tgz_file_path: The path to the tgz file that you want to extract
         :type tgz_file_path: str
         """

@@ -317,13 +317,13 @@ class ModelFactory:
 
 
 def evaluate_regression_model(model_list: list,
-                              X_train: np.ndarray,y_train: np.ndarray,
+                              X_train: np.ndarray, y_train: np.ndarray,
                               X_test: np.ndarray, y_test: np.ndarray,
                               base_accuracy: float = 0.6) -> MetricInfoArtifact:
     """
     This function evaluates a list of regression models based on their accuracy and root mean squared
     error, and returns the best model that meets certain criteria.
-    
+
     :param model_list: A list of regression models to be evaluated
     :type model_list: list
     :param X_train: A numpy array containing the features of the training dataset
@@ -339,7 +339,6 @@ def evaluate_regression_model(model_list: list,
     :type base_accuracy: float
     :return: a MetricInfoArtifact object.
     """
-    
 
     try:
         index_number = 0
@@ -380,7 +379,7 @@ def evaluate_regression_model(model_list: list,
                          Difference between train and test acc : -->>>> {diff_train_test_acc}
                          """)
 
-            if round(model_accuracy,3) >= round(base_accuracy,3) and diff_train_test_acc < 0.05:
+            if round(model_accuracy, 3) >= round(base_accuracy, 3) and diff_train_test_acc < 0.05:
                 base_accuracy = model_accuracy
                 metric_info_artifact = MetricInfoArtifact(model_name=model_name,
                                                           model_object=model,

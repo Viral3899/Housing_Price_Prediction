@@ -23,7 +23,7 @@ class ModelEvaluation:
         """
         This is the constructor function for a class that takes in several artifacts and a configuration
         object and initializes them as class attributes.
-        
+
         :param model_evaluation_config: An object of the class ModelEvaluationConfig, which contains the
         configuration settings for model evaluation
         :type model_evaluation_config: ModelEvaluationConfig
@@ -69,11 +69,11 @@ class ModelEvaluation:
 
             if not os.path.exists(model_evaluation_file_path):
                 write_yaml_file(file_path=model_evaluation_file_path)
-                
+
                 return model
             model_evaluation_file_content = read_yaml_file(
                 file_path=model_evaluation_file_path)
-            
+
             model_evaluation_file_content = dict(
             ) if model_evaluation_file_content is None else model_evaluation_file_content
 
@@ -91,7 +91,7 @@ class ModelEvaluation:
     def update_evaluation_report(self, model_evaluation_artifact: ModelEvaluationArtifact):
         """
         This function updates a model evaluation report with the results of a new model evaluation.
-        
+
         :param model_evaluation_artifact: The parameter `model_evaluation_artifact` is an object of the
         class `ModelEvaluationArtifact` which contains information about the evaluated model such as the
         path to the model file
@@ -178,7 +178,7 @@ class ModelEvaluation:
                 return model_evaluation_artifact
 
             model_list = [model, trained_model_object]
-            
+
             metric_info_artifact = evaluate_regression_model(model_list=model_list,
                                                              X_train=train_dataframe,
                                                              y_train=train_target,
@@ -192,8 +192,8 @@ class ModelEvaluation:
 
             if metric_info_artifact is None:
                 response = ModelEvaluationArtifact(is_model_accepted=False,
-                                                                    evaluated_model_path=trained_model_file_path
-                                                                    )
+                                                   evaluated_model_path=trained_model_file_path
+                                                   )
                 logging.info(response)
 
                 return response

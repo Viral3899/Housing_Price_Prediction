@@ -10,7 +10,7 @@ columns:
   population: float64
   total_bedrooms: float64
   total_rooms: float64
-  median_house_value : float64
+  median_house_value: float64
 domain_value:
   ocean_proximity:
   - NEAR BAY

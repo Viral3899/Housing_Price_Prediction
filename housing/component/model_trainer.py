@@ -36,7 +36,8 @@ class HousingEstimatorModel:
 
         try:
             transformed_features = self.preprocessing_object.transform(X)
-            predictions = self.trained_model_object.predict(transformed_features)
+            predictions = self.trained_model_object.predict(
+                transformed_features)
             return predictions
         except Exception as e:
             logging.info(f'Error Occurred at {HousingException(e,sys)}')

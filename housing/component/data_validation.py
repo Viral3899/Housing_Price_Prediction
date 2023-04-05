@@ -21,11 +21,11 @@ from housing.config.configuration import Configuration
 
 class DataValidation:
 
-    def __init__(self, data_validation_config: DataValidationConfig,data_ingestion_artifact: DataIngestionArtifact):
+    def __init__(self, data_validation_config: DataValidationConfig, data_ingestion_artifact: DataIngestionArtifact):
         """
         This is a constructor function that initializes the data validation configuration and data
         ingestion artifact, and logs any errors that occur.
-        
+
         :param data_validation_config: This parameter is of type DataValidationConfig and contains the
         configuration settings for data validation
         :type data_validation_config: DataValidationConfig

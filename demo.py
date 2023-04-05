@@ -12,11 +12,11 @@ def main():
     try:
         pipe = Pipeline()
         pipe.run()
-        
+
     except Exception as e:
         logging.error(f"Error Occurred at {HousingException(e,sys)}")
         raise HousingException(e, sys)
-    
-if __name__ == '__main__':
 
+
+if __name__ == '__main__':
     main()
