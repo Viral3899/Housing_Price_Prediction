@@ -11,7 +11,7 @@ ssl._create_default_https_context = ssl._create_unverified_context
 def main():
     try:
         pipe = Pipeline()
-        pipe.run()
+        pipe.start()
 
     except Exception as e:
         logging.error(f"Error Occurred at {HousingException(e,sys)}")

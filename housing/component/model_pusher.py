@@ -26,7 +26,7 @@ class ModelPusher:
         :type model_evaluation_artifact: ModelEvaluationArtifact
         """
         try:
-            logging.info(f"{'=' * 30}Model Pusher log started.{'=' * 30} ")
+            logging.info(f"\n\n{'=' * 30}Model Pusher log started.{'=' * 30}\n\n")
             self.model_pusher_config = model_pusher_config
             self.model_evaluation_artifact = model_evaluation_artifact
 
@@ -77,4 +77,4 @@ class ModelPusher:
             raise HousingException(e, sys) from e
 
     def __del__(self):
-        logging.info(f"{'==' * 20}Model Pusher log completed.{'==' * 20} ")
+        logging.info(f"\n\n{'==' * 20}Model Pusher log completed.{'==' * 20}\n\n")
