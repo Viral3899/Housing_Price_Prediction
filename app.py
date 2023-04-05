@@ -1,15 +1,17 @@
 import os
+import numpy as np
 import threading
 from flask import Flask, render_template, request
 import joblib
 from housing.pipeline.pipeline import Pipeline
 from housing.entity.housing_predictor import HousingData, HousingPredictor
+from housing.config.configuration import Configuration
 from housing.constant import *
 
 app = Flask(__name__)
 
 # Load the pipeline for retraining the model
-pipeline = Pipeline()
+
 
 ROOT_DIR = os.getcwd()
 LOG_FOLDER_NAME = "logs"
@@ -62,6 +64,8 @@ def index():
 @app.route('/retrain', methods=['GET', 'POST'])
 def retrain():
     if request.method == 'POST':
+        pipeline = Pipeline(config=Configuration(config_file_path=
+                                                 CONFIG_FILE_PATH))
         # Check if the pipeline is already running
         if pipeline.experiment.running_status:
             # Render the template with an error message
@@ -69,20 +73,27 @@ def retrain():
         
         # Start the pipeline for retraining the model
         pipeline.start()
-         # Run the pipeline in a new thread
-        threading.Thread(target=pipeline.start).start()
+
+        # Run the pipeline in a new thread
+        threading.Thread(target=pipeline.run_pipeline).start()
+
+        # Render the template with a success message
+        return render_template('retrain.html', message='The model retraining process has started.')
+
+    # Check if the pipeline has completed and the running status is false
+    if not pipeline.experiment.running_status and pipeline.experiment.stop_time != np.nan:
+        # Stop the pipeline
+        pipeline.stop()
+
+        # Start the pipeline for retraining the model
+        pipeline.start()
+
+        # Run the pipeline in a new thread
+        threading.Thread(target=pipeline.run_pipeline).start()
 
         # Render the template with a success message
         return render_template('retrain.html', message='The model retraining process has started.')
     
-    # If the request method is GET, check if the pipeline is running or not
-    if pipeline.experiment.running_status:
-        running_status = True
-    else:
-        running_status = False
-    
-    # Render the template with the running status
-    return render_template('retrain.html', running_status=running_status)
 
 if __name__ == '__main__':
     app.run(debug=True)
