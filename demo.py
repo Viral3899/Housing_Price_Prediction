@@ -16,6 +16,7 @@ def main():
     except Exception as e:
         logging.error(f"Error Occurred at {HousingException(e,sys)}")
         raise HousingException(e, sys)
+    
 if __name__ == '__main__':
 
     main()
