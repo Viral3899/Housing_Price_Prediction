@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Housing Price Predictor</title>
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}">
+</head>
+<body>
+	<h1>Housing Price Predictor</h1>
+	<form method="POST" action="{{ url_for('index') }}">
+		<label for="longitude">Longitude:</label>
+		<input type="text" id="longitude" name="longitude" required>
+
+		<label for="latitude">Latitude:</label>
+		<input type="text" id="latitude" name="latitude" required>
+
+		<label for="housing_median_age">Housing Median Age:</label>
+		<input type="text" id="housing_median_age" name="housing_median_age" required>
+
+		<label for="total_rooms">Total Rooms:</label>
+		<input type="text" id="total_rooms" name="total_rooms" required>
+
+		<label for="total_bedrooms">Total Bedrooms:</label>
+		<input type="text" id="total_bedrooms" name="total_bedrooms" required>
+
+		<label for="population">Population:</label>
+		<input type="text" id="population" name="population" required>
+
+		<label for="households">Households:</label>
+		<input type="text" id="households" name="households" required>
+
+		<label for="median_income">Median Income:</label>
+		<input type="text" id="median_income" name="median_income" required>
+
+		<label for="ocean_proximity">Ocean Proximity:</label>
+		<select id="ocean_proximity" name="ocean_proximity">
+			<option value="NEAR BAY">Near Bay</option>
+			<option value="INLAND">Inland</option>
+			<option value="NEAR OCEAN">Near Ocean</option>
+			<option value="<1H OCEAN">On Bay</option>
+			<option value="ISLAND">Island</option>
+		</select>
+
+		<input type="submit" value="Predict">
+	</form>
+
+	{% if pipeline_status %}
+		<p><strong>Model Retraining Status:</strong> {{ pipeline_status }}</p>
+	{% endif %}
+
+	<form method="POST" action="{{ url_for('retrain') }}">
+		<input type="submit" value="Retrain Model">
+	</form>
+
+</body>
+</html>

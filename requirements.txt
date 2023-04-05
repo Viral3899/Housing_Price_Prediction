@@ -9,4 +9,5 @@ PyYAML
 requests
 evidently
 dill
+joblib
 -e .

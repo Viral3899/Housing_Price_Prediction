@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Result</title>
+	<style>
+		table {
+			border-collapse: collapse;
+			margin: auto;
+			font-size: 1.2rem;
+			font-weight: 500;
+			text-align: left;
+		}
+		table td, table th {
+			border: 1px solid #ddd;
+			padding: 0.5rem;
+			text-align: left;
+			vertical-align: middle;
+		}
+		table th {
+			background-color: #f2f2f2;
+			color: #444;
+			font-weight: 600;
+		}
+		h1 {
+			text-align: center;
+			font-size: 2rem;
+			font-weight: 600;
+			margin-top: 2rem;
+		}
+		h2 {
+			text-align: center;
+			font-size: 1.5rem;
+			font-weight: 600;
+			margin-top: 1.5rem;
+		}
+		.result {
+			text-align: center;
+			font-size: 2.5rem;
+			font-weight: 600;
+			margin-top: 2rem;
+			text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+		}
+	</style>
+</head>
+<body>
+	<h1>Result</h1>
+	<h2>Input Data</h2>
+	<table>
+		<tr>
+			<th>Longitude</th>
+			<td>{{ longitude }}</td>
+		</tr>
+		<tr>
+			<th>Latitude</th>
+			<td>{{ latitude }}</td>
+		</tr>
+		<tr>
+			<th>Housing Median Age</th>
+			<td>{{ housing_median_age }}</td>
+		</tr>
+		<tr>
+			<th>Total Rooms</th>
+			<td>{{ total_rooms }}</td>
+		</tr>
+		<tr>
+			<th>Total Bedrooms</th>
+			<td>{{ total_bedrooms }}</td>
+		</tr>
+		<tr>
+			<th>Population</th>
+			<td>{{ population }}</td>
+		</tr>
+		<tr>
+			<th>Households</th>
+			<td>{{ households }}</td>
+		</tr>
+		<tr>
+			<th>Median Income</th>
+			<td>{{ median_income }}</td>
+		</tr>
+		
+		<tr>
+			<th>Ocean Proximity</th>
+			<td>{{ ocean_proximity }}</td>
+		</tr>
+	</table>
+	<div class="result">
+		Predicted House Value: {{ prediction }}
+	</div>
+</body>
+</html>

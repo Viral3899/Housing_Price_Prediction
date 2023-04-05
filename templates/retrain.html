@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Retrain Model</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/retrain.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Retrain Model</h1>
+      <form method="POST">
+        {% if message %}
+          <div class="alert alert-danger" role="alert">
+            {{ message }}
+          </div>
+        {% endif %}
+        <button class="btn btn-primary" type="submit" {% if running_status %}disabled{% endif %}>
+          {% if running_status %}
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            Running...
+          {% else %}
+            Retrain
+          {% endif %}
+        </button>
+      </form>
+      {% if stop_status %}
+        <div class="alert alert-success mt-3" role="alert">
+          The model retraining process has been stopped.
+        </div>
+      {% endif %}
+    </div>
+  </body>
+</html>
