@@ -48,7 +48,7 @@
 		<p><strong>Model Retraining Status:</strong> {{ pipeline_status }}</p>
 	{% endif %}
 
-	<form method="POST" action="{{ url_for('retrain') }}">
+	<form method="GET" action="{{ url_for('retrain') }}">
 		<input type="submit" value="Retrain Model">
 	</form>
 
