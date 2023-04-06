@@ -24,6 +24,7 @@ MODEL_DIR = os.path.join(ROOT_DIR, SAVED_MODELS_DIR_NAME)
 HOUSING_DATA_KEY = "housing_data"
 MEDIAN_HOUSING_VALUE_KEY = "median_house_value"
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -36,7 +37,7 @@ def index():
         households = float(request.form['households'])
         median_income = float(request.form['median_income'])
         ocean_proximity = request.form['ocean_proximity']
-  
+
         housing_data = HousingData(longitude=longitude,
                                    latitude=latitude,
                                    housing_median_age=housing_median_age,
@@ -52,48 +53,50 @@ def index():
 
         prediction_str = f"${prediction[0]:,.2f}"
         # Render the template with the prediction result
-        return render_template ('result.html', longitude=longitude, latitude=latitude,
-		housing_median_age=housing_median_age, total_rooms=total_rooms,
-		total_bedrooms=total_bedrooms, population=population, households=households,
-		median_income=median_income,
-		ocean_proximity=ocean_proximity, prediction=prediction_str)
-        
+        return render_template('result.html', longitude=longitude, latitude=latitude,
+                               housing_median_age=housing_median_age, total_rooms=total_rooms,
+                               total_bedrooms=total_bedrooms, population=population, households=households,
+                               median_income=median_income,
+                               ocean_proximity=ocean_proximity, prediction=prediction_str)
+
     # Render the template with the input form
     return render_template('index.html')
+
 
 @app.route('/retrain', methods=['GET', 'POST'])
 def retrain():
     if request.method == 'POST':
-        pipeline = Pipeline(config=Configuration(config_file_path=
-                                                 CONFIG_FILE_PATH))
+        pipeline = Pipeline(config=Configuration(
+            config_file_path=CONFIG_FILE_PATH))
+        
         # Check if the pipeline is already running
         if pipeline.experiment.running_status:
-            # Render the template with an error message
-            return render_template('retrain.html', message='The model retraining process is already running.')
-        
-        # Start the pipeline for retraining the model
-        pipeline.start()
-
-        # Run the pipeline in a new thread
-        threading.Thread(target=pipeline.run_pipeline).start()
-
-        # Render the template with a success message
-        return render_template('retrain.html', message='The model retraining process has started.')
-
-    # Check if the pipeline has completed and the running status is false
-    if not pipeline.experiment.running_status and pipeline.experiment.stop_time != np.nan:
-        # Stop the pipeline
-        pipeline.stop()
+            message = 'The model retraining process is already running.'
+            context = {"experiment": pipeline.get_experiments_status().to_html(
+                classes='table table-striped col-12'), "message": message}
+            return render_template('retrain.html', context=context)
 
         # Start the pipeline for retraining the model
         pipeline.start()
-
         # Run the pipeline in a new thread
         threading.Thread(target=pipeline.run_pipeline).start()
+        message = 'The model retraining process has started.'
+        context = {"experiment": pipeline.get_experiments_status().to_html(
+            classes='table table-striped col-12'), "message": message}
 
         # Render the template with a success message
-        return render_template('retrain.html', message='The model retraining process has started.')
-    
+        return render_template('retrain.html', context=context)
+
+    # Render the template for retraining the model
+    return render_template('retrain.html')
+            
+           
+
+        # Start the pipeline for retraining the model
+        # Run the pipeline in a new thread
+        # # Render the template with a success message
+        # return render_template('retrain.html', )
+
 
 if __name__ == '__main__':
     app.run(debug=True)
