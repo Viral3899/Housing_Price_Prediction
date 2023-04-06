@@ -1,26 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Retrain Model</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/retrain.css') }}">
 </head>
+
 <body>
     <div class="container">
         <h1 class="title">Retrain Model</h1>
 
         {% if context is defined %}
-            <p class="message">{{ context.message }}</p>
+        <p class="message">{{ context.message }}</p>
 
-            <div class="experiment-status">
-                <h2 class="experiment-title">Experiment Status</h2>
-                <div class="experiment-table">
-                    {{ context.experiment|safe }}
-                </div>
+        <div class="experiment-status">
+            <h2 class="experiment-title">Experiment Status</h2>
+            <div class="experiment-table">
+                {{ context.experiment|safe }}
             </div>
+        </div>
 
         {% else %}
-            <p class="message">Click the button below to start the retraining process.</p>
+        <p class="message">Click the button below to start the retraining process.</p>
         {% endif %}
 
         <form action="{{ url_for('retrain') }}" method="POST">
@@ -29,4 +31,5 @@
 
     </div>
 </body>
+
 </html>

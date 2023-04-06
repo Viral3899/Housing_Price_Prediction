@@ -65,53 +65,23 @@ def index():
 
 @app.route('/retrain', methods=['GET', 'POST'])
 def retrain():
-    # if request.method == 'POST':
-    #     pipeline = Pipeline()
-        
-    #     # Check if the pipeline is already running
-    #     if pipeline.experiment.running_status:
-    #         message = 'The model retraining process is already running.'
-    #         context = {"experiment": pipeline.get_experiments_status().to_html(
-    #             classes='table table-striped col-12'), "message": message}
-    #         return render_template('retrain.html', context=context)
-
-    #     # Start the pipeline for retraining the model
-    #     pipeline.start()
-    #     pipeline.stop()
-    #     # Run the pipeline in a new thread
-    #     threading.Thread(target=pipeline.run_pipeline).start()
-    #     message = 'The model retraining process has started.'
-    #     context = {"experiment": pipeline.get_experiments_status().to_html(
-    #         classes='table table-striped col-12'), "message": message}
-
-    #     # Render the template with a success message
-    #     return render_template('retrain.html', context=context)
-
-    # # Render the template for retraining the model
-    # return render_template('retrain.html')
-            
     message = ""
-    pipeline = Pipeline(config=Configuration(current_time_stamp=get_current_time_stamp()))
-    if Pipeline.experiment.running_status==False and Pipeline.experiment.stop_time!=np.nan:
-            message = "Training is completed."
+    pipeline = Pipeline(config=Configuration(
+        current_time_stamp=get_current_time_stamp()))
+    if Pipeline.experiment.running_status == False and Pipeline.experiment.stop_time != np.nan:
+        message = "Training is completed."
     if request.method == 'POST':
         if not Pipeline.experiment.running_status:
             message = "Re-Training started."
             pipeline.start()
-        else :
+        else:
             message = "Training is already in progress."
-        
-            
+
     context = {
         "experiment": pipeline.get_experiments_status().to_html(classes='table table-striped col-12'),
         "message": message
     }
     return render_template('retrain.html', context=context)
-
-        # Start the pipeline for retraining the model
-        # Run the pipeline in a new thread
-        # # Render the template with a success message
-        # return render_template('retrain.html', )
 
 
 if __name__ == '__main__':
