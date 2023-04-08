@@ -11,5 +11,10 @@ RETRAIN
 
 ![image](https://user-images.githubusercontent.com/101617198/230703836-cdbe4b56-c6c6-4a23-99f0-43a86a32487e.png)
 
+# GENERAL STRUCTURE 
+
+![MicrosoftTeams-image (1)](https://user-images.githubusercontent.com/101617198/230705045-66c0dc69-5caf-43bf-bddb-0bd6dac3df15.jpg)
+
+
 
 
