@@ -13,7 +13,7 @@ RETRAIN
 
 # GENERAL STRUCTURE 
 
-![MicrosoftTeams-image (1)](https://user-images.githubusercontent.com/101617198/230705045-66c0dc69-5caf-43bf-bddb-0bd6dac3df15.jpg)
+![Slide1](https://user-images.githubusercontent.com/101617198/230705112-297b86b4-7fb0-43c5-b40e-b849c0dd064e.JPG)
 
 
 
