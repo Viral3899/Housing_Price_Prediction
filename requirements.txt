@@ -7,7 +7,7 @@ xgboost
 catboost
 PyYAML
 requests
-evidently
+evidently==0.2.0
 dill
 joblib
 -e .
