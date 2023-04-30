@@ -10,4 +10,5 @@ requests
 evidently==0.2.0
 dill
 joblib
+pytest
 -e .
