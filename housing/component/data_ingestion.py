@@ -2,6 +2,7 @@ import os
 import sys
 import requests
 from six.moves import urllib
+
 import tarfile
 import pandas as pd
 import numpy as np
@@ -62,7 +63,7 @@ class DataIngestion:
              """)
 
             urllib.request.urlretrieve(download_url, tgz_file_path)
-
+            # print(download_url)
             # response = requests.get(download_url)
             # with open(tgz_file_path, 'wb') as f:
             #     f.write(response.content)
